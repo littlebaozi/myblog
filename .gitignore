@@ -5,5 +5,5 @@ db.json
 node_modules/
 public/
 .deploy*/
-themes/icarus/*
+themes/icarus/
 !themes/icarus/_config.yml
