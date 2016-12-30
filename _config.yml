@@ -69,3 +69,11 @@ theme: icarus
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type:
+
+# RSS
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
