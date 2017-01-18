@@ -1,6 +1,7 @@
 ---
 title: hexo
 date: 2016-02-01 10:29:44
+thumbnail: https://hexo.io/logo.svg
 tags:
 - hexo
 categories: 
@@ -11,7 +12,7 @@ categories:
 hexo的安装使用文档在[这里](https://hexo.io/zh-cn/docs/)。
 
 ## _config.yml
-需要配置的地方：
+　　需要配置的地方：
 ```yml
 language: zh-CN #不同主题不一样
 url: https://littlebaozi.github.io #website url
@@ -21,10 +22,10 @@ theme: icarus #主题
 
 ## package.json
 * hexo-admin
-这个可以进入`localhost:4000/admin`，进行后台管理UI，可以写文章、删除文章、发布等操作。[更多配置](https://github.com/jaredly/hexo-admin)。
+　　这个可以进入`localhost:4000/admin`，进行后台管理UI，可以写文章、删除文章、发布等操作。[更多配置](https://github.com/jaredly/hexo-admin)。
 
 * hexo-deployer-git
-用来发布到git page。_config.yml中配置如下:
+　　用来发布到git page。_config.yml中配置如下:
 ```yml
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -36,7 +37,7 @@ deploy:
 [更多配置](https://github.com/hexojs/hexo-deployer-git)。
 
 * hexo-generator-feed
-用来生成RSS。_config.yml中配置如下:
+　　用来生成RSS。_config.yml中配置如下:
 ```yml
 # RSS
 feed:
@@ -49,8 +50,8 @@ feed:
 [更多配置](https://github.com/hexojs/hexo-generator-feed)。
 
 ## 主题
-主题使用了[icarus](https://github.com/ppoffice/hexo-theme-icarus)
-配置如下：
+　　主题使用了[icarus](https://github.com/ppoffice/hexo-theme-icarus)
+　　配置如下：
 ```yml
 # Menus,中文要改左边
 menu:
@@ -79,6 +80,13 @@ plugins:
 ## 遇到的问题
 * 浏览器访问出现CAN NOT GET/：`npm isntall`再安装下依赖
 * category页面和tags页面标题英文：修改source/categories/index.md、source/tags/index.md
+* `hexo server `报错
+```bash
+ERROR Plugin load failed: hexo-generator-json-content
+SyntaxError: Block-scoped declarations (let, const, function, class) not yet supported outsi
+de strict mode
+```
+在`blog\node_modules\hexo-generator-json-content`第一行加入`"use strict";`
 
 ## 写作
 * 写草稿：`hexo new draft <title>`；发布草稿：`hexo publish <title>`

@@ -1,6 +1,7 @@
 ---
 title: webpack配置
 date: 2016-02-2 10:42:08
+thumbnail: http://webpack.github.io/assets/what-is-webpack.png
 tags:
 - webpack
 - 构建工具
@@ -77,7 +78,7 @@ module.exports   = {
 ```
 ## 配置细节
 ### entry
-    配置要打包的文件的入口；可以配置多个入口文件
+　　配置要打包的文件的入口；可以配置多个入口文件
 ```json
 entry = {
     "/demo/button": "demo/button/index.jsx"),
@@ -86,13 +87,13 @@ entry = {
 ```
 
 ### resolve
-    配置文件后缀名，除了js，还有jsx、coffee等等。除了这个功能还可以配置其他有用的功能，由于我还不完全了解，有知道的朋友欢迎指教。
+　　配置文件后缀名，除了js，还有jsx、coffee等等。除了这个功能还可以配置其他有用的功能，由于我还不完全了解，有知道的朋友欢迎指教。
     
 ### output
-    配置输出文件的路径，文件名等。
+　　配置输出文件的路径，文件名等。
 
 ### module(loaders)
-    配置要使用的loader。对文件进行一些相应的处理。比如babel-loader可以把es6的文件转换成es5。
+　　配置要使用的loader。对文件进行一些相应的处理。比如babel-loader可以把es6的文件转换成es5。
 大部分的对文件的处理的功能都是通过loader实现的。loader就相当于gulp里的task。loader可以用来处理在入口文件中require的和其他方式引用进来的文件。loader一般是一个独立的node模块，要单独安装。
 * loader配置项
 ```json
@@ -105,7 +106,7 @@ test: /\.(js|jsx)$/,
 ```
 
 ### plugins
-    顾名思义，就是配置要使用的插件。不过plugin和loader有什么差别还有待研究。来看一个使用plugin的例子：
+　　顾名思义，就是配置要使用的插件。不过plugin和loader有什么差别还有待研究。来看一个使用plugin的例子：
 ```json
 plugins: [
     //压缩打包的文件new webpack.optimize.UglifyJsPlugin({
