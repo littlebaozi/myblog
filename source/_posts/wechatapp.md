@@ -17,7 +17,7 @@ categories:
 
 <!--more-->
 
-## 开发
+## API
 ### 页面跳转
 　　在wxml中设置`data-url`属性、`bindtap`事件
 ```xml
@@ -117,7 +117,7 @@ function getNewItems(){
 
     所以用`scroll-view`的bindscrolltoupper事件
     
-## 请求
+### 请求
 　　`wx.request`的success返回值不是服务器的直接返回数据，实际是在res.data中。所以如果statsuCode在服务器返回的数据中，需要自己做判断：
 ```javascript
 //配合promise
@@ -144,9 +144,60 @@ new Promise((resolve, reject) => {
 })
 ```
 
-## 跳转
+### 跳转
 * 比如从登陆页跳转到首页（tabBar有配置首页），必须使用`wx.switchTab(OBJECT)`跳转。
 * app.js 使用`wx.switchTab(OBJECT)`跳转，报错`Cannot read property 'webviewId' of undefined`。
+
+## 组件
+### picker
+　　index表示数据的下标，用来处理选中，需要在data中保存记录。当数据是object value时，需要设置`range-key`，否则弹出框显示[object objec]。
+
+```html
+<!-- 
+value：弹出框中默认选中的值的index；
+range-key： 弹出框中需要显示的key值
+-->
+<picker bindchange="bindPickerChange" value="{{index}}" range="{{objectArray}}" range-key="name">
+    <view >
+        <text>请选择：</text>
+        <view >
+            <text>{{objectArray[index].name}} </text>
+        </view>
+    </view>
+</picker>
+```
+
+```js
+Page({
+    data: {
+        index:0, //默认选中第几个
+        objectArray:[
+          {
+            id: 0,
+            name: '美国'
+          },
+          {
+            id: 1,
+            name: '中国'
+          },
+          {
+            id: 2,
+            name: '巴西'
+          },
+          {
+            id: 3,
+            name: '日本'
+          }
+        ]
+    },
+    bindPickerChange: function(e){
+        //选择Change事件，改变选中index
+        this.setData({
+            index: e.detail.value
+        });
+    }
+})
+```
 
 ## 问题
 * WAService.js:3 navigateTo:fail url not in app.json
