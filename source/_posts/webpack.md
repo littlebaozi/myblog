@@ -1,7 +1,7 @@
 ---
 title: webpack配置
 date: 2016-02-2 10:42:08
-thumbnail: http://webpack.github.io/assets/what-is-webpack.png
+thumbnail: https://webpack.github.io/assets/what-is-webpack.png
 tags:
 - webpack
 - 构建工具

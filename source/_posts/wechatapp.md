@@ -76,49 +76,29 @@ this.setData({
 1. 下拉刷新
 * 下拉刷新需要在页面配置json中开启`"enablePullDownRefresh": true`。
 
-* 在页面js中，使用`onPullDownRefresh`事件，重新请求数据，请求完数据后通过`wx.stopPullDownRefresh()`停止当前页面的下拉刷新。小程序已经移除promise，需要用到第三方promise库，推荐[es6-promise](https://github.com/stefanpenner/es6-promise)，网上有反映bluebird在android真机上报错。
-```
-var Promise = require('../../utils/es6-promise.min.js');
-
-Page({
-    //...
-     onPullDownRefresh:function(){
-        getNewItems().then(function(items){
-       
-            this.setData({
-                'items':items
-            });
-            wx.stopPullDownRefresh()
-        });
-    }
-    //...
-})
-
-function getNewItems(){
-    return new Promise((reslove, reject) => {
-        try{
-            reslove([
-                {id:1,url:'',title:'燃气报警1',content:'燃气报警器发生报警',time:'10:48'},
-                {id:2,url:'',title:'燃气报警1',content:'燃气报警器发生报警',time:'09:30'},
-                {id:3,url:'',title:'工单处理完成1',content:'您的报修工单已经受理',time:'10月26日'}
-            ]);
-        }catch(err){
-            reject(err)
-            console.log(err)
-        }
-    });
-}
-```
+* 在页面js中，使用`onPullDownRefresh`事件，重新请求数据，请求完数据后通过`wx.stopPullDownRefresh()`停止当前页面的下拉刷新。
 
 2. 滚动到底部加载
 　　虽然可以使用onReachBottom，但是官方有bug，（╯‵□′）╯┴─┴ 
 * bug: iOS/Android 6.3.30, 首次进入页面，如果页面不满一屏时会触发 onReachBottom ，应为只有用户主动上拉才触发；
 * bug: iOS/Android 6.3.30, 手指上拉，会触发多次 onReachBottom ，应为一次上拉，只触发一次；
-
-    所以用`scroll-view`的bindscrolltoupper事件
     
+```
+Page({
+    //...
+     onPullDownRefresh:function(){
+        // request
+        wx.stopPullDownRefresh()
+    },
+    onReachBottom: function(){
+        // ...
+    }
+    //...
+})
+```
+
 ### 请求
-　　`wx.request`的success返回值不是服务器的直接返回数据，实际是在res.data中。所以如果statsuCode在服务器返回的数据中，需要自己做判断：
+　　`wx.request`的success返回值不是服务器的直接返回数据，实际是在res.data中。所以如果statsuCode在服务器返回的数据中，需要自己做判断。下面通过[es6-promise](https://github.com/stefanpenner/es6-promise)封装了一下请求
 ```javascript
 //配合promise
 new Promise((resolve, reject) => {
@@ -202,3 +182,4 @@ Page({
 ## 问题
 * WAService.js:3 navigateTo:fail url not in app.json
 　　url使用的是相对路径，不是app.json里配置的复制过来就行了
+* 小程序已经移除promise，需要用到第三方promise库，推荐[es6-promise](https://github.com/stefanpenner/es6-promise)，网上有反映bluebird在android真机上报错。
