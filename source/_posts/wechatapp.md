@@ -27,7 +27,8 @@ categories:
     </view> 
 </block>
 ```
-　　获取data属性，使用`dataset`
+　　获取data属性，使用`dataset`。
+　　*注意*：如果`view`内部还有元素，`e.target.dataset`是无法获取`data`属性的，需要使用`currentTarget`。
 ```
 Page({
     navigatePage: function(e){
