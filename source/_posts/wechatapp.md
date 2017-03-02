@@ -179,6 +179,12 @@ Page({
 })
 ```
 
+### input
+　　input的type类型不同弹出键盘的类型不同
+* text：全键盘
+* mumber：纯数字键盘
+* digit：待小数点的数字键盘
+
 ## 问题
 * WAService.js:3 navigateTo:fail url not in app.json
 　　url使用的是相对路径，不是app.json里配置的复制过来就行了
