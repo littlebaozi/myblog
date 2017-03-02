@@ -1,6 +1,6 @@
 ---
 title: React Native 安装配置
-date: 2017-01-23 11:00:23
+date: 2016-03-01 11:00:23
 thumbnail: http://www.smartworld.it/wp-content/uploads/2016/04/react-native.png
 tags:
 - react native
