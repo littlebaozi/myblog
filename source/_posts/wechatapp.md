@@ -17,6 +17,9 @@ categories:
 
 <!--more-->
 
+## 事件绑定
+　　绑定的事件无法传参，用`data-`属性，然后用`e.currentTarget.dataset`获取
+
 ## API
 ### 页面跳转
 　　在wxml中设置`data-url`属性、`bindtap`事件
