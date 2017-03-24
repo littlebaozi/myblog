@@ -130,6 +130,16 @@ new Promise((resolve, reject) => {
 
 ### 跳转
 * 比如从登陆页跳转到首页（tabBar有配置首页），必须使用`wx.switchTab(OBJECT)`跳转。
+* 已经打开的tab，调用`switchTab`不会触发`onShow`，只能手动调用`onShow`。
+```javascript
+wx.switchTab({  
+    url: '../index/index',  
+    success: function (e) {  
+    var page = getCurrentPages().pop();  
+    if (page == undefined || page == null) return;  
+    page.onShow();  
+}  
+```
 * app.js 使用`wx.switchTab(OBJECT)`跳转，报错`Cannot read property 'webviewId' of undefined`。
 
 ## 组件
