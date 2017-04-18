@@ -198,6 +198,34 @@ Page({
 * text：全键盘
 * mumber：纯数字键盘
 * digit：待小数点的数字键盘
+* 重置高度使用em单位
+
+### scroll-view
+　　上下布局，下面scroll-view高度自动撑满：
+* 一种方式是计算高度，设置scroll-view高度。但是设置了tabbar的话，没有显示tabbar的页面，windowHeight是减去tabbar的高度。可以新增的screenHeight。然而如果用rpx布局，计算误差还是存在的。
+* 另一种方式是css来布局。
+
+```html
+<view class="location-section">当前位置</view>
+<scroll-view class="scroll-section" scroll-y="true" ></scroll-view>
+```
+```css
+.location-section{
+    height: 60rpx;
+}
+.scroll-section{
+    height: 100%;
+    padding-top: 60rpx;
+    position: absolute;
+    top:0;
+    box-sizing: border-box;
+}
+```
+
+## API
+　　screenHeight, SDKVersion 基础库版本 1.1.0 开始支持, 微信客户端 6.5.6 版本开始支持。
+所以在需要设置scrollview高度与屏幕高度相关时，旧版本只能windowHeight，但在设置tabbar时，会减去tabbar的高度。
+tabbar高度是`56px`，需要手动加上。
 
 ## 问题
 * WAService.js:3 navigateTo:fail url not in app.json
