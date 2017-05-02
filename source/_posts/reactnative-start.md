@@ -1,7 +1,7 @@
 ---
 title: React Native 安装配置
 date: 2016-03-01 11:00:23
-thumbnail: http://www.smartworld.it/wp-content/uploads/2016/04/react-native.png
+thumbnail: https://www.smartworld.it/wp-content/uploads/2016/04/react-native.png
 tags:
 - react native
 categories: 
@@ -35,14 +35,14 @@ Path
 * Android SDK Build-tools version 23.0.1
 * Android 6.0 (API 23)
 * Android Support Repository
-![sdk](http://7xj79j.com1.z0.glb.clouddn.com/sdk.png)
+{% asset_img sdk.png SDK安装 %}
 
 ### 4.安装node
 　　下载之后，下一步下一步安装就行了。
 ### 5.安装git
-![git setup_1](http://7xj79j.com1.z0.glb.clouddn.com/bashsetup_1.png)
-![git setup_2](http://7xj79j.com1.z0.glb.clouddn.com/bashsetup_2.png)
-![git setup_3](http://7xj79j.com1.z0.glb.clouddn.com/bashsetup_3.png)
+{% asset_img bashsetup_1.png 步骤1 %}
+{% asset_img bashsetup_2.png 步骤2 %}
+{% asset_img bashsetup_2.png 步骤3 %}
 
 ### 6.安装react-native-cli
 　　国内npm访问慢，用taobao的npm镜像挺好的。打开git bash设置下，以后就用cnpm啦。
@@ -77,15 +77,15 @@ react-native start
 react-native run-android
 ```
 　　第一次肯定报错。
-![reactnative firstload](http://7xj79j.com1.z0.glb.clouddn.com/reactnative_firstload.png)
+{% asset_img reactnative_firstload.png 步骤1 %}
 　　摇一摇手机，或者按Menu键，点击Dev Settings后，点击Debug server host & port for device，设置IP和端口（电脑的ip，并且在同一局域网中）：192.168.1.xx:8081，再按back键返回，再按Menu键，在调试菜单中选择Reload JS，就应该可以看到运行的结果了。
-![reactnative dev](http://7xj79j.com1.z0.glb.clouddn.com/reactnative_setdev.png)
-![reactnative dev_1](http://7xj79j.com1.z0.glb.clouddn.com/reactnative_setdev_1.png)
-![reactnative prot](http://7xj79j.com1.z0.glb.clouddn.com/reactnative_setport.png)
+{% asset_img reactnative_setdev.png 步骤2 %}
+{% asset_img reactnative_setdev_1.png 步骤3 %}
+{% asset_img reactnative_setport.png 步骤4 %}
 
 ## 六、编辑器
 　　推荐webstorm。配置下JSX语法识别。
-![websotorm jsx](http://7xj79j.com1.z0.glb.clouddn.com/webstorm_jsx.png)
+{% asset_img webstorm_jsx.png webstorm设置 %}
 
 ## 七、react-native命令
 

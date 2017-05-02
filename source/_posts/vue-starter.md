@@ -1,6 +1,6 @@
 ---
 title: vue2.0 踩坑
-thumbnail: http://cn.vuejs.org/images/logo.png
+thumbnail: https://cn.vuejs.org/images/logo.png
 tags:
   - vue.js
   - mvvm

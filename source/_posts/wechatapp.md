@@ -229,5 +229,6 @@ tabbar高度是`56px`，需要手动加上。
 
 ## 问题
 * WAService.js:3 navigateTo:fail url not in app.json
-　　url使用的是相对路径，不是app.json里配置的复制过来就行了
-* 小程序已经移除promise，需要用到第三方promise库，推荐[es6-promise](https://github.com/stefanpenner/es6-promise)，网上有反映bluebird在android真机上报错。
+　　url使用的是相对路径，不是app.json里配置的复制过来就行了。
+* <del>小程序已经移除promise，需要用到第三方promise库</del>，推荐[es6-promise](https://github.com/stefanpenner/es6-promise)，网上有反映bluebird在android真机上报错。</del>更新之后Promise可以直接使用了。
+* Android能访问接口，IOS不能访问接口并且报错“此服务器的证书无效”。那应该是https的证书问题。网上说，startcom的证书在IOS10上无法使用。
