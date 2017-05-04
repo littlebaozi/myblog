@@ -131,6 +131,7 @@ new Promise((resolve, reject) => {
 ### 跳转
 * 比如从登陆页跳转到首页（tabBar有配置首页），必须使用`wx.switchTab(OBJECT)`跳转。
 * 已经打开的tab，调用`switchTab`不会触发`onShow`，只能手动调用`onShow`。
+* `wx.reLaunch`在1.1.0基础库中，安卓能够返回上一级页面，会报错`navigateBack with an unexist webviewId`
 ```javascript
 wx.switchTab({  
     url: '../index/index',  
