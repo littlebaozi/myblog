@@ -391,3 +391,24 @@ console.log([typeof n, typeof ++n]); //["object", "number"]
 ​​​​​​​* Proxy
 
 ### 5. 对象的高级属性
+* getter 和 setter
+* 属性描述符
+
+不建议修改Object.prototype和Array.prototype。
+* 在数组上添加方法的问题
+<a class="jsbin-embed" href="//code.h5jun.com/geq/3/embed?html,js,output">JS Bin on jsbin.com</a><script src="https:////code.h5jun.com/js/embed.min.js?3.40.2"></script>
+
+* 解决这一问题的方法
+1. 禁止使用 for...in 操作数组，只用 for 或 Array.prototype.forEach
+2. 禁止往数组上随便添加方法
+3. ... 禁止 1 + 2 （防止自己和防止别人）
+4. ... 使用 ES5 新特性`Object.defineProperty`
+
+使用`Object.defineProperty`，它的`enumerable`是false，所以for...in不会枚举出来
+<a class="jsbin-embed" href="//code.h5jun.com/yik/1/embed?html,js,output">JS Bin on jsbin.com</a><script src="https:////code.h5jun.com/js/embed.min.js?3.40.2"></script>
+
+* getter/setter
+<a class="jsbin-embed" href="//code.h5jun.com/tet/1/embed?html,js,output">JS Bin on jsbin.com</a><script src="https:////code.h5jun.com/js/embed.min.js?3.40.2"></script>
+
+* 数据绑定视图
+<a class="jsbin-embed" href="//code.h5jun.com/fas/1/embed?html,js,output">JS Bin on jsbin.com</a><script src="https:////code.h5jun.com/js/embed.min.js?3.40.2"></script>
