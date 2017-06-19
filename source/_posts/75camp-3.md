@@ -6,6 +6,7 @@ tags:
 - JavaScript
 categories: 
 - JavaScript
+- 奇舞特训营
 ---
 
 # 变量值、类型
