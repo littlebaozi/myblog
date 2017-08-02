@@ -1,7 +1,8 @@
 ---
 title: js中的this问题
 date: 2017-08-02 15:25:25
-tags:
+tags: JavaScript
+categories: JavaScript
 ---
 
 普通函数中this在非严格模式下指向window，在严格模式下是undefined

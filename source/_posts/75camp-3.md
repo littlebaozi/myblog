@@ -4,9 +4,9 @@ date: 2017-06-19 21:32:51
 thumbnail: https://t.75team.com/static/img/badges.png
 tags: 
 - JavaScript
+- 奇舞特训营
 categories: 
 - JavaScript
-- 奇舞特训营
 ---
 
 # 变量值、类型
