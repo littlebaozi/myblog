@@ -32,34 +32,37 @@ categories:
 * 写入特征值
 * 特征值变化通知
 
-所以，开发的时候，需要向硬件开发人员了解设备的相关server和characteristic。连接设备可以通过MAC地址（Android）、uuid（iOS）、设备名称。
+所以，开发的时候，需要向硬件开发人员了解设备的相关server uuid和characteristic uuid。连接设备可以通过MAC地址（Android）、uuid（iOS）、设备名称。
 
 兼容性：基础库1.1.0，iOS 微信客户端 6.5.6 版本开始支持，Android 6.5.7 版本开始支持
 
 ## 二、连接流程
-流程图
+
+{% asset_img bleflow.jpeg 蓝牙设备交互流程图 %}
 
 　　在项目中，已知设备的MAC地址（Android作为deviceId）、service的uuid、写入 （需要发送一次地址匹配命令包、一次开门命令包）characteristic的uuid、notify（获取门禁回复的命令包）characteristic的uuid。
 
 ### 1. 初始化蓝牙
 　　小程序是没有打开蓝牙权限的，所以用户没有打开蓝牙需要提示他打开。本来想用[`wx.getBluetoothAdapterState`](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxgetbluetoothadapterstateobject)的`res.adapterState.available`来判断是否打开，但是首次打开蓝牙之后，再关闭，available一直是true。所以，还是直接使用[`wx.openBluetoothAdapter`](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxopenbluetoothadapterobject)来判断，success表明已打开，fail表明未打开。
 
-### 2. 连接蓝牙过程
+### 2. 连接蓝牙的主要操作
 　　Android可以使用`deviceId`（项目中是MAC地址）直接发起连接；
-　　iOS只能连接已发现的设备（即已知的deviceId必须在接口`wx.getBluetoothDevices`的返回结果中存在），且获取的是设备uuid，项目中只事先知道设备MAC地址，只能全部连接一遍发送数据（因为会发送一次设备MAC地址的匹配命令包，所以同时有多个设备只会打开一个）。
+　　iOS只能连接已发现的设备（即已知的deviceId必须在接口`wx.getBluetoothDevices`的返回结果中存在），且获取的是设备uuid，项目中只事先知道设备MAC地址，只能全部连接一次发送地址匹配的命令，匹配通过才发送开门命令。
 
-#### 2.1 搜索蓝牙设备（IOS），[wx.startBluetoothDevicesDiscovery](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxstartbluetoothdevicesdiscoveryobject)
-　　可以设置参数`services`（蓝牙设备主 service 的 uuid 列表）, 只查找有指定service的蓝牙设备。
+#### 2.1 搜索蓝牙设备，[wx.startBluetoothDevicesDiscovery](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxstartbluetoothdevicesdiscoveryobject)
+　　可以设置参数`services`（蓝牙设备主 service 的 uuid 列表）, 只查找有指定service uuid的蓝牙设备。
+　　在成功回调中，Android直接发起连接，iOS则监听设备发现。
 
 #### 2.2 监听寻找到新设备（IOS），[wx.onBluetoothDeviceFound](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxonbluetoothdevicefoundcallback)
-　　在成功回调中使用`wx.getBluetoothDevices`获取设备 -> 成功回调中循环devices -> 判断device的uuid是否有连接的service uuid（上一步使用了services参数，其实就不需要判断了），有则使用设备uuid做deviceId连接设备。
+　　每次监听到新设备，就发起一次设备连接。
 
 #### 2.3 连接蓝牙设备，[wx.createBLEConnection](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxcreatebleconnectionobject)
-　　 在success的回调中：
+　　 在连接success的回调中：
 1. Android直接调用`wx.writeBLECharacteristicValue`写入数据（写在`getBLEDeviceCharacteristics`成功回调中，第二次发送数据会报10008错，不知道原因）；
 2. `wx.getBLEDeviceServices`获取已发现的设备列表；
 3. 成功回调中`wx.getBLEDeviceCharacteristics`获取指定service的特征值；
-4. 成功回调中，写入数据（iOS），开启特征值变化通知`wx.notifyBLECharacteristicValueChange`（需要写在这里，写在`getBLEDeviceServices`之前会报错）-> `wx.onBLECharacteristicValueChange`监听特征值变化
+4. 成功回调中，写入数据（iOS），开启特征值变化通知`wx.notifyBLECharacteristicValueChange`
+5. 成功回调中，使用`wx.onBLECharacteristicValueChange`监听特征值变化，然后发送地址匹配命令数据包（Android需要做一个延时发送数据，否则写入数据会报10008错误）；
 
 #### 2.4 写入数据，[writeBLECharacteristicValue](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxwriteblecharacteristicvalueobject)
 　　参数value的类型是`ArrayBuffer`（蓝牙设备特征值对应的二进制值）。那`ArrayBuffer`是什么？
@@ -67,29 +70,28 @@ categories:
 > `ArrayBuffer`对象被用来表示一个通用的，固定长度的二进制数据缓冲区。
 
 官方术语比较难理解，可以理解为存储二进制数据的对象。详细解释可以看[MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer),还有一篇通俗点的解释[理解DOMString、Document、FormData、Blob、File、ArrayBuffer数据类型](http://www.zhangxinxu.com/wordpress/2013/10/understand-domstring-document-formdata-blob-file-arraybuffer/)。
-　　官方例子中使用`ArrayBuffer`创建一个字节长度的`ArrayBuffer`对象，然后使用DataView读入数据。
-　　`ArrayBuffer`是不能读写的，需要使用[`DataView`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/DataView)或者[类型化数组,`Uint8Array`等](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Typed_arrays)来读写。
+　　`ArrayBuffer`是不能直接读写的，需要使用[`DataView`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/DataView)或者[类型化数组,`Uint8Array`等](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Typed_arrays)来读写。
 
 ```javascript
 // 向蓝牙设备发送一个0x00的16进制数据
-let buffer = new ArrayBuffer(1)
+let buffer = new ArrayBuffer(1)·
 let dataView = new DataView(buffer)
 dataView.setUint8(0, 0)
 ```
 
-　　在项目中，需要传一个13长度的数组命令包，数组中每个元素代表不同命令。类型化数组有大部分数组的方法，不过没有concat、splice方法。创建类型化数组时可以直接传入数组转化。
-1. 用数组创建，元素用2位16进制表示，比如`let arr = [0x01, 0xaa]`；
-2. 拼接、插入等操作处理数组；
-3. `let bufferView = new Uint8Array(arr)`将数组转换为8位无符号整型数组吗，就是说长度为arr，每个元素是8位大小。为什么用8位呢？ 因为8位二进制正好可以表示2位16进制。8位二进制`0000 0000~ 1111 1111`，2位16进制`0x00~0xFF`，表示的大小范围相同10进制都是0~255。
+　　在项目中，需要传一个固定长度的数据命令包，每一位代表不同命令，用两位16进制表示。类型化数组有大部分数组的方法，不过没有concat、splice方法。创建类型化数组时可以直接传入数组转化。
+1. 先创建一个数组，元素用2位16进制表示，比如`let arr = [0x01, 0xaa]`；
+2. 将设备mac地址拼接、插入等操作处理数组；
+3. `let bufferView = new Uint8Array(arr)`将数组转换为8位无符号整型数组，就是说长度为arr.length，每个元素是8位大小。为什么用8位呢？ 因为8位二进制正好可以表示2位16进制。8位二进制`0000 0000~ 1111 1111`，2位16进制`0x00~0xFF`，表示的大小范围相同10进制都是0~255。
 4. `bufferView.buffer`转换为`ArrayBuffer` 。`buffer`可以返回由`Uint8Array`引用的`ArrayBuffer`。
-5. 前面已经监听了特征值变化，所以发送数据后会有notify返回，里面有设备返回的数据。返回的数据也是`ArrayBuffer`，所以先用`Uint8Array`转一下，使用下面的方法转车16进制。
+5. 前面已经监听了特征值变化，所以发送数据后会有notify返回，里面有设备返回的数据。返回的数据也是`ArrayBuffer`，所以先用`Uint8Array`转一下，就可以取到数组中的值。想要更直观的查看里面的16进制值，可以使用下面的方式处理：
 ```javascript
 Array.prototype.slice.call(decodeDataView).map((_v) => {
     return _v.toString(16)
 })
 ```
 
-　　当然，也可以先使用`new ArrayBuffer()`，然后用`new Uint8Array(buffer)`创建视图增删改里面的数据，
+　　也可以先使用`var buffer = new ArrayBuffer(arr)`，然后用`new Uint8Array(buffer)`创建视图增删改里面的数据，
 
 ## 三、iOS和Android接口使用差异
 * IOS使用蓝牙设备UUID作为deviceId连接设备，Android使用蓝牙设备的MAC地址作为deviceId连接设备。
