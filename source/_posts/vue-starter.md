@@ -78,8 +78,9 @@ router.beforeEach((to, from, next) => {
 ```bash
 npm install --save-dev babel-plugin-syntax-dynamic-import
 ```
+
 2. 修改`.babelrc`，plugins中增加`syntax-dynamic-import`的配置
-```bash
+```javascript
 "plugins": [
     "transform-runtime",
     "syntax-dynamic-import",
@@ -89,6 +90,11 @@ npm install --save-dev babel-plugin-syntax-dynamic-import
       }
     ]
   ],
+```
+
+3. 引入组件
+```javascript
+const Login = () => import('@/pages/Login')
 ```
 
 # 二、flexible自适应
