@@ -5,7 +5,8 @@ tags: JavaScript
 categories: JavaScript
 ---
 
-## bind
+## 一、对象
+### 1. bind
 普通函数中this在非严格模式下指向window，在严格模式下是undefined
 ```javascript
 'use strict'
@@ -29,7 +30,8 @@ Obj.getStr.call();
 Obj.getStr.bind(this)();
 ```
 
-## for...of 与 for...in
+## 二、数组
+### 1. for...of 与 for...in
 `for...in` 遍历key；`for...of` 遍历value
 ```javascript
 let arr = ["a","b"];
@@ -40,4 +42,15 @@ for (a in arr) {
 for (a of arr) {
     console.log(a);//a,b
 }
+```
+
+### 2. 扁平化合并数组
+```javascript
+Array.prototype.concat.apply(["a","b"], ["c","d"])
+Array.prototype.concat.apply([], [["a","b"],["c", "d"]])
+```
+
+### 3. 求最大值
+```javascript
+Math.max.apply(null, [10, -1, 5])
 ```
