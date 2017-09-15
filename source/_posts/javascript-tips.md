@@ -50,6 +50,9 @@ Array.prototype.concat.apply(["a","b"], ["c","d"])
 Array.prototype.concat.apply([], [["a","b"],["c", "d"]])
 ```
 
+### 3. 转换数组对象
+`[].slice.call(arguments)`，可以在函数内将参数转换成数组
+
 ### 3. 求最大值
 ```javascript
 Math.max.apply(null, [10, -1, 5])
