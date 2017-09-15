@@ -27,20 +27,24 @@ categories:
 
 关于BLE相关的知识可以看这篇：[GATT Profile 简介](https://www.race604.com/gatt-profile-intro/)。
 
-和蓝牙设备通信都是对characteristic进行操作的，主要包括：
-* 读取特征值
-* 写入特征值
-* 特征值变化通知
-
-所以，开发的时候，需要向硬件开发人员了解设备的相关server uuid和characteristic uuid。连接设备可以通过MAC地址（Android）、uuid（iOS）、设备名称。
-
 兼容性：基础库1.1.0，iOS 微信客户端 6.5.6 版本开始支持，Android 6.5.7 版本开始支持
 
 ## 二、连接流程
+主要的流程如下：
+初始化蓝牙适配器（openBluetoothAdapter） ->  查找蓝牙设备（startBluetoothDevicesDiscovery）-> 获取设备（getBluetoothDevices） -> 连接设备（createBLEConnection） -> 获取设备服务（getBLEDeviceServices） -> 获取设备特征值（getBLEDeviceCharacteristics） -> 开启蓝牙设备通知（notifyBLECharacteristicValueChange） -> 写入数据（writeBLECharacteristicValue） -> 关闭蓝牙连接（closeBLEConnection）
+
+下图是公司项目中的流程，由于Android和iOS的接口差异和项目需求，所以搞得挺麻烦的。
 
 {% asset_img bleflow.jpeg 蓝牙设备交互流程图 %}
 
-　　在项目中，已知设备的MAC地址（Android作为deviceId）、service的uuid、写入 （需要发送一次地址匹配命令包、一次开门命令包）characteristic的uuid、notify（获取门禁回复的命令包）characteristic的uuid。
+　　对蓝牙设备的读写操作主要是通过对应特征值的操作，在项目中获取到的设备特征值有三个：write、read、notify，其中write、notify是true，表示可以使用相应接口做操作。具体要看自己的项目中蓝牙设备的情况使用。
+　　这个项目中，是用notify来监听设备返回数据的，所以不用手动去read操作。因此过程是不一样的，开启设备通知 -> 写入设备的匹配命令 -> 设备返回成功命令 -> 发送操作命令 -> 设备返回成功命令
+
+　　在项目中，已知设备的MAC地址。Android可以直接使用MAC地址发起连接，createBLEConnection的deviceID就是蓝牙设备的MAC地址。
+
+　　但是ios不一样，deviceID是蓝牙设备的UUID，事先是不知道的，只有对已发现的设备全部连接一遍做一次设备匹配才能确定哪个才是要连接的设备。所以iOS的连接操作是在`wx.onBluetoothDeviceFound`中进行的。每次发现一个设备，就进行一次连接匹配，直到匹配到需要连接的设备后停止设备搜索。（已发现设备会缓存起来，所以我是每次用户操作时都会closeBluetoothAdapter，清空数据）
+
+　　但是问题又来了，发现设备的间隔是很快的，可能两次设备连接同时进行，然后互相产生了干扰导致连接经常失败。我就将发现的设备存入数组中，每次发现设备就push进去。从数组第一个开始连接，连接失败就在数组中移除，然后连接下一个，直到连接到正确的设备。
 
 ### 1. 初始化蓝牙
 　　小程序是没有打开蓝牙权限的，所以用户没有打开蓝牙需要提示他打开。本来想用[`wx.getBluetoothAdapterState`](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxgetbluetoothadapterstateobject)的`res.adapterState.available`来判断是否打开，但是首次打开蓝牙之后，再关闭，available一直是true。所以，还是直接使用[`wx.openBluetoothAdapter`](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxopenbluetoothadapterobject)来判断，success表明已打开，fail表明未打开。
@@ -80,11 +84,10 @@ dataView.setUint8(0, 0)
 ```
 
 　　在项目中，需要传一个固定长度的数据命令包，每一位代表不同命令，用两位16进制表示。类型化数组有大部分数组的方法，不过没有concat、splice方法。创建类型化数组时可以直接传入数组转化。
-1. 先创建一个数组，元素用2位16进制表示，比如`let arr = [0x01, 0xaa]`；
-2. 将设备mac地址拼接、插入等操作处理数组；
-3. `let bufferView = new Uint8Array(arr)`将数组转换为8位无符号整型数组，就是说长度为arr.length，每个元素是8位大小。为什么用8位呢？ 因为8位二进制正好可以表示2位16进制。8位二进制`0000 0000~ 1111 1111`，2位16进制`0x00~0xFF`，表示的大小范围相同10进制都是0~255。
-4. `bufferView.buffer`转换为`ArrayBuffer` 。`buffer`可以返回由`Uint8Array`引用的`ArrayBuffer`。
-5. 前面已经监听了特征值变化，所以发送数据后会有notify返回，里面有设备返回的数据。返回的数据也是`ArrayBuffer`，所以先用`Uint8Array`转一下，就可以取到数组中的值。想要更直观的查看里面的16进制值，可以使用下面的方式处理：
+1. 先创建一个数组，存储需要发送的数据，元素用2位16进制表示，比如`let arr = [0x01, 0xaa]`；
+2. `let bufferView = new Uint8Array(arr)`将数组转换为8位无符号整型数组，就是说长度为arr.length，每个元素是8位大小。为什么用8位呢？ 因为8位二进制正好可以表示2位16进制。8位二进制`0000 0000~ 1111 1111`，2位16进制`0x00~0xFF`，表示的大小范围相同10进制都是0~255。
+3. `bufferView.buffer`转换为`ArrayBuffer` 。`buffer`可以返回由`Uint8Array`引用的`ArrayBuffer`。
+4. 前面已经监听了特征值变化，所以发送数据后会有notify返回，里面有设备返回的数据。返回的数据也是`ArrayBuffer`，所以先用`Uint8Array`转一下，就可以取到数组中的值。想要更直观的查看里面的16进制值，可以使用下面的方式处理：
 ```javascript
 Array.prototype.slice.call(decodeDataView).map((_v) => {
     return _v.toString(16)
