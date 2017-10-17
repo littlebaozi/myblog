@@ -9,10 +9,10 @@ categories:
 ---
 
 ## 开发工具IDEA
-1. 右键新建没有`java Class`,将src Mark as Sources
+*. 右键新建没有`java Class`,将src Mark as Sources
 {% asset_img project_structure.png project structure 设置 %}
 
-2. 代码提示不区分大小写
+*. 代码提示不区分大小写
 {% asset_img code_completion.png project 代码提示 设置 %}
 
 ## 构建工具
