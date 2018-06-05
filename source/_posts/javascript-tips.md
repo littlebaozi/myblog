@@ -57,3 +57,16 @@ Array.prototype.concat.apply([], [["a","b"],["c", "d"]])
 ```javascript
 Math.max.apply(null, [10, -1, 5])
 ```
+
+## 时间
+### 1. 时间戳
+```javascript
+// 方法
+Date.now()
+
+// 对象方法
+new Date().getTime()
+
+// 对象和操作符
++new Date()
+```
