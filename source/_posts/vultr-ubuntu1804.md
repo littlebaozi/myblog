@@ -16,12 +16,13 @@ apt-get upgrade
 ```
 
 ## shadowsockets安装
-1. [一键安装脚本python版](https://teddysun.com/342.html)
+1. [一键安装脚本python版](https://teddysun.com/486.html)
 2. 多用户需要防火墙开启端口
 3. 网络加速：[google bbr](https://teddysun.com/489.html)
 
-## ss-panel安装
-[脚本安装](https://github.com/mmmwhy/ss-panel-and-ss-py-mu)
+## ss-manager安装
+https://blog.tearth.me/ssmgr_1/
+https://blog.tearth.me/ssmgr_2/
 
 ## 极路由使用
 1. ssh 连接路由器
@@ -44,7 +45,7 @@ rm /swapfile # 删除swap文件
 2. `yum install sqlite-devel`安装
 2. 输入`sqlite3`进入sqlite，输入`.quit`退出
 
-## ngix安装
+## nginx安装
 [安装教程]()
 
 ## ghost安装
