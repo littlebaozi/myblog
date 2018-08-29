@@ -44,6 +44,9 @@ for (a of arr) {
 }
 ```
 
+### 2. 初始化元素相同的数组
+`Array.from({length: 5}, ()=>10)`初始化长度5，元素值都为10的数组
+
 ### 2. 扁平化合并数组
 ```javascript
 Array.prototype.concat.apply(["a","b"], ["c","d"])
@@ -53,9 +56,12 @@ Array.prototype.concat.apply([], [["a","b"],["c", "d"]])
 ### 3. 转换数组对象
 `[].slice.call(arguments)`，可以在函数内将参数转换成数组
 
-### 3. 求最大值
+### 3. 求最大值/小值
 ```javascript
-Math.max.apply(null, [10, -1, 5])
+Math.max.apply(null, [10, -1, 5]);
+Math.max(...[1,3,2]);
+Math.min.apply(null, [10, -1, 5]);
+Math.min(...[1,3,2]);
 ```
 
 ## 时间
