@@ -1,6 +1,6 @@
 ---
-title: Windows下安装nvm
-date: 2017-08-30 19:02:55
+title: nvm的安装
+date: 2018-11-19 13:46:55
 tags: node.js
 categories: 工具
 ---
@@ -9,7 +9,8 @@ categories: 工具
 
 <!-- more -->
 
-我的开发环境是windows，所以下面来说说windows下的安装步骤：
+## 一、Windows下安装nvm
+windows下面安装也挺方便的，有对应的nvm-windows，下一步下一步就安装好了。
 ### 1. 先卸载已经安装的node
 最好是先别装node，保持干净环境。如果装了请把全局的npm的包卸载删除。这是因为用了nvm后，全局安装会安装到nvm下的当前版本node的`node_modules`目录，然而之前全局的npm包命令还能用有干扰，用npm-check工具无法更新，一直会检测原来的`node_modules`目录。
 
@@ -61,3 +62,18 @@ prefix=D:\dev\nvm\npm-global
 npm install -g cnpm nrm npm-check --registry=http://r.cnpmjs.org
 ```
 
+## 二、mac
+最近买了macbook，更新下mac环境安装nvm。
+
+* 进[nvm的github](https://github.com/creationix/nvm)复制install script `curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash`
+
+* 安装完之后，bash输入nvm回车会显示nvm: command not found
+* 终端输入命令vim创建编辑：`vi .bash_profile`，把下面的内容粘贴进去
+```
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+```
+* 按esc输入`:qw`保存退出
+* 终端输入：source .bash_profile
+* 然后就可以愉快使用了

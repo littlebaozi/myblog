@@ -25,6 +25,8 @@ categories:
 - webpack.config.js
 - package.json
 
+<!--more-->
+
 
 ## 2. webpack安装与基础配置
 ### 2.1 项目安装webpack
