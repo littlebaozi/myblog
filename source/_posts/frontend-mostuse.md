@@ -82,6 +82,37 @@ categories: 前端框架
 * [Velocity.js](http://velocityjs.org/)
 * [snabbt.js](https://daniel-lundin.github.io/snabbt.js/)
 
+### 4. 富文本
+* [wangEditor](http://www.wangeditor.com/)
+
+### 5. 树
+* [zTree](http://www.treejs.cn)
+* [jsTree](https://www.jstree.com/)
+
+### 6. 右键菜单
+* [jQuery contextMenu](http://acquisio.github.io/bootstrap-dropdown-checkbox/)
+
+### 7. 表单验证
+* [jQuery Validation Plugin](https://jqueryvalidation.org/)
+
+### 8. 上传
+* [Web Uploader](http://fex.baidu.com/webuploader/)
+
+### 9. 表格
+* [jqGrid](http://guriddo.net/)
+
+### 10. 打印
+* [printThis](https://github.com/jasonday/printThis)
+* [jQuery Print Plugin](https://github.com/DoersGuild/jQuery.print)
+
+## Bootstrap
+* [Bootstrap Table](http://bootstrap-table.wenzhixin.net.cn/zh-cn/)
+* [Bootstrap-Iconpicker](http://victor-valencia.github.io/bootstrap-iconpicker) 图标选择
+* [ydTreeSelect](https://www.npmjs.com/package/yd-treeselect) 树形选择
+* [Bootstrap File Input](http://plugins.krajee.com/file-input) 上传
+* [bootstrap-multiselect](https://github.com/davidstutz/bootstrap-multiselect)  多选
+* [bootstrap-multitabs](https://gitee.com/edwinhuish/multi-tabs) tab页面切换
+* [bootstrap 扩展](http://getfuelux.com/index.html)
 
 ## 六、调试/测试
 ### 测试
@@ -93,7 +124,12 @@ categories: 前端框架
 * [UI Recorder](https://github.com/alibaba/uirecorder) UI测试
 * [Macaca](https://github.com/alibaba/macaca) 多端测试
 
-## 7、效率工具
+## 七、生产力工具
 * [WeFlow](https://weflow.io/)
 * [ELF](https://elf.aotu.io/)
 * [QMUI](https://qmuiteam.com/)
+* [瓦力上线部署](http://www.walle-web.io/)
+* [字蛛](http://font-spider.org/)
+
+## 八、资源
+* [iconfont](http://www.iconfont.cn/)
