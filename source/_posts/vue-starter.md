@@ -5,8 +5,9 @@ tags:
   - vue.js
   - mvvm
 categories:
-  - 前端框架
+  - 开发
 date: 2017-02-08 09:11:22
+toc: true
 ---
 
 
@@ -41,6 +42,8 @@ router.beforeEach((to, from, next) =>{
   }
 })
 ```
+
+<!-- more -->
 
 ## 2. 默认跳转到某页
 　　设置redirect字段

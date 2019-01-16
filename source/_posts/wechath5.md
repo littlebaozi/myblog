@@ -2,7 +2,7 @@
 title: 微信H5遇到的坑
 date: 2019-01-02 10:39:26
 tags: H5
-categories: 爬坑
+categories: 开发
 ---
 
 ## 微信视频播放全屏

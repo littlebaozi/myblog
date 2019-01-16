@@ -6,7 +6,7 @@ tags:
 - webpack
 - 构建工具
 categories: 
-- 工具
+- 开发
 ---
 
 ## 命令操作

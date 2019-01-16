@@ -5,7 +5,7 @@ thumbnail: https://www.smartworld.it/wp-content/uploads/2016/04/react-native.png
 tags:
 - react native
 categories: 
-- 框架
+- 开发
 ---
 
 ## 一、环境

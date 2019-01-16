@@ -5,7 +5,7 @@ tags:
 - webpack
 - 构建工具
 categories: 
-- 工具
+- 开发
 ---
 
 ## 1. 准备工作

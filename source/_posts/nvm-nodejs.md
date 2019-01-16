@@ -1,8 +1,10 @@
 ---
 title: nvm的安装
 date: 2018-11-19 13:46:55
-tags: node.js
-categories: 工具
+tags:
+ - node.js
+ - npm
+categories: 开发
 ---
 
 现在做前端开发已经离不开node环境了。有些工具框架之类的又node的版本要求，所以切换node版本的工具是极好的。目前有两个工具，一个是tj大神的[n](https://github.com/tj/n)，另一个是[nvm](https://github.com/creationix/nvm)。工具上总有二选一这种艰难选择的情况。然后我选择了nvm，不要问我为什么，因为我瞎选的ㄟ( ▔, ▔ )ㄏ 。

@@ -5,7 +5,7 @@ thumbnail: https://hexo.io/logo.svg
 tags:
 - hexo
 categories: 
-- 工具
+- 折腾
 ---
 
 本来想更新下版本，结果各种报错，干脆重新建一下，记录下过程。
