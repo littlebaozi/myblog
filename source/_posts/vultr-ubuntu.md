@@ -27,6 +27,13 @@ apt-get upgrade
 https://blog.tearth.me/ssmgr_1/
 https://blog.tearth.me/ssmgr_2/
 
+## v2ray 安装
+https://github.com/v2ray
+一键安装脚本
+```bash
+bash <(curl -L -s https://install.direct/go.sh)
+```
+
 ## 极路由使用
 1. ssh 连接路由器
 2. 使用[脚本安装](https://github.com/qiwihui/hiwifi-ss)
@@ -48,30 +55,16 @@ rm /swapfile # 删除swap文件
 2. `yum install sqlite-devel`安装
 2. 输入`sqlite3`进入sqlite，输入`.quit`退出
 
-## nginx安装
-[安装教程]()
+## kms
+https://teddysun.com/530.html
+* 一键安装 `wget --no-check-certificate https://github.com/teddysun/across/raw/master/kms.sh && chmod +x kms.sh && ./kms.sh`
+* 查看端口号监听 `netstat -nxtlp | grep 1688`
+* 卸载 `./kms.sh uninstall`
 
-## ghost安装
-[安装教程](https://www.vultr.com/docs/install-and-configure-a-ghost-v1-blog-on-ubuntu-16-04)
-https://docs.ghost.org/docs/install
-
-```
-sudo mkdir -p /var/www/blog_ghost
-sudo chown <johndoe>:<johndoe> /var/www/blog_ghost
-cd /var/www/blog_ghost
-ghost install
-```
-
-* 出现`EACCES: permission denied, scandir '/home/baozi/.config/yarn/link'`错误，运行命令
-`sudo chmod 775 /home/baozi/.config/`
-* Error: ER_NOT_SUPPORTED_AUTH_MODE
-```
-# This connects to mysql
-mysql -u root
-# In the mysql prompt, run:
-use mysql;
-update user set authentication_string=password(''), plugin='mysql_native_password' where user='root';
-flush privileges;
+Ubuntu 18 需要安装
+```bash
+apt install glibc-doc
+apt install libc6-dev
 ```
 
 ## linux命令
@@ -84,3 +77,7 @@ passwd username ## 回车重置密码
 * nano编辑器
 `nano /etc/hosts`打开编辑文件
 ctrl+x退出
+* 查看swap
+```bash
+free -h
+```
