@@ -67,6 +67,24 @@ apt install glibc-doc
 apt install libc6-dev
 ```
 
+## nginx
+### 一、安装Nginx所需的环境
+[Ubuntu 18.04.1安装Nginx]https://www.cnblogs.com/yanyh/p/9801466.html
+
+## aria2
+[BT种子/磁力链接下载工具：Aria2一键安装管理脚本](https://www.moerats.com/archives/251/)
+### AriaNg
+[aria2+ariang+nginx linux 离线下载部署](https://www.jianshu.com/p/8124b5b6ef95)
+编辑aria2.conf
+1.rpc-secret=你的密码把‘你的密码’改为你的密码即可
+2.dir=/home/x/Downloads 将路径改为你的下载目录
+3.input-file=/home/x/aria2/aria2.session改为你的aria2.session路经
+4.save-session=/home/x/aria2/aria2.session改为你的aria2.session路经
+
+## 应用
+[CentOS/Debian安装人人影视客户端，下载资源并自动上传到OneDrive网盘](https://www.moerats.com/archives/813)
+
+
 ## linux命令
 * 删除文件/文件夹
 ```bash
