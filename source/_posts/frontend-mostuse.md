@@ -25,6 +25,8 @@ toc: true
 
 * 开发框架：[Taro（多端/react）](https://github.com/NervJS/taro)、[mpvue](https://github.com/Meituan-Dianping/mpvue)、 [WePY（vue）](https://github.com/Tencent/wepy)
 
+* 插件：[markdown解析](https://github.com/sbfkcel/towxml)
+
 ## 后台UI框架
 * Vue：[iView](https://github.com/iview/iview)、 [Element](http://element.eleme.io/#/zh-CN)
 
