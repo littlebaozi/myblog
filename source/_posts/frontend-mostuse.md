@@ -78,7 +78,7 @@ toc: true
 
 * 日期选择：[layDate](https://www.layui.com/laydate/)、[DateTimePicker ](https://xdsoft.net/jqplugins/datetimepicker/)
 
-* 时间格式化：[date-fns](https://date-fns.org/)
+* 时间格式化：[date-fns](https://date-fns.org/)、[dayjs](https://github.com/iamkun/dayjs)
 
 * 样式重置：[modern-normalize](https://github.com/sindresorhus/modern-normalize)
 
