@@ -29,6 +29,30 @@ categories:
 
 兼容性：基础库1.1.0，iOS 微信客户端 6.5.6 版本开始支持，Android 6.5.7 版本开始支持
 
+## 一、接口
+### 1. wx.getBluetoothAdapterState
+#### 1.1 未调用过`openBluetoothAdapter`
+* 蓝牙打开/未打开状态
+
+fail，接口调用失败
+```json
+{errCode: 10000, errMsg: "getBluetoothAdapterState:fail:not init"}
+```
+#### 1.2 调用过`openBluetoothAdapter`
+* 蓝牙打开状态
+
+success，接口调用成功
+```json
+{discovering: false, errMsg: "getBluetoothAdapterState:ok", available: true}
+```
+
+* 蓝牙未打开状态
+success，接口调用成功
+```json
+{discovering: false, errMsg: "getBluetoothAdapterState:ok", available: false}
+```
+
+
 ## 二、连接流程
 主要的流程如下：
 初始化蓝牙适配器（openBluetoothAdapter） ->  查找蓝牙设备（startBluetoothDevicesDiscovery）-> 获取设备（getBluetoothDevices） -> 连接设备（createBLEConnection） -> 获取设备服务（getBLEDeviceServices） -> 获取设备特征值（getBLEDeviceCharacteristics） -> 开启蓝牙设备通知（notifyBLECharacteristicValueChange） -> 写入数据（writeBLECharacteristicValue） -> 关闭蓝牙连接（closeBLEConnection）
