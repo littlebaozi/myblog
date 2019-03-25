@@ -30,7 +30,7 @@ toc: true
 ## 后台UI框架
 * Vue：[iView](https://github.com/iview/iview)、 [Element](http://element.eleme.io/#/zh-CN)
 
-* jQuery：[Layui](https://www.layui.com/)、[H-ui](http://www.h-ui.net/index.shtml)、 [袋鼠UI（bootstrap）](http://kangarooui.waimai.meituan.com/2.0/base/)、[AdminLTE](https://adminlte.io/)
+* jQuery：[Layui](https://www.layui.com/)、[H-ui](http://www.h-ui.net/index.shtml)、[AdminLTE](https://adminlte.io/)
 
 * React: [Ant Design](https://ant.design/)、 [Zent](https://github.com/youzan/zent)、 [React Suite](https://github.com/rsuite/rsuite)
 
@@ -85,6 +85,8 @@ toc: true
 * 样式重置：[modern-normalize](https://github.com/sindresorhus/modern-normalize)
 
 * 行政区数据：[Administrative-divisions-of-China](https://github.com/modood/Administrative-divisions-of-China)
+
+* 视频：[griffith](https://github.com/zhihu/griffith)
 
 ## Bootstrap插件
 * [Bootstrap Table](http://bootstrap-table.wenzhixin.net.cn/zh-cn/)
