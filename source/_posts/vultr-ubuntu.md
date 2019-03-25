@@ -69,7 +69,7 @@ apt install libc6-dev
 
 ## nginx
 ### 一、安装Nginx所需的环境
-[Ubuntu 18.04.1安装Nginx]https://www.cnblogs.com/yanyh/p/9801466.html
+[Ubuntu 18.04.1安装Nginx](https://www.cnblogs.com/yanyh/p/9801466.html)
 
 ## aria2
 [BT种子/磁力链接下载工具：Aria2一键安装管理脚本](https://www.moerats.com/archives/251/)
