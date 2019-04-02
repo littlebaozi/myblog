@@ -4,6 +4,7 @@ thumbnail: https://cn.vuejs.org/images/logo.png
 tags:
   - vue.js
   - mvvm
+  - vue权限
 categories:
   - 开发
 date: 2017-02-08 09:11:22
@@ -119,3 +120,9 @@ module.exports = {
 	postcss: [px2rem({remUnit: 75})]
 }
 ```
+
+## 权限
+* [vue-auth-solution](https://github.com/OneWayTech/vue-auth-solution)
+* [基于vue-router的动态权限实现方案](https://segmentfault.com/a/1190000009396901)
+* [Vue2.0用户权限控制解决方案](https://refined-x.com/2017/11/28/Vue2.0%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/)
+* [手摸手，带你用vue撸后台 系列二(登录权限篇)](https://juejin.im/post/591aa14f570c35006961acac?utm_source=gold_browser_extension)
