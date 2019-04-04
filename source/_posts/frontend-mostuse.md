@@ -23,8 +23,7 @@ toc: true
 ## 小程序
 * UI框架： [有赞 Vant Weapp](https://github.com/youzan/vant-weapp)、 [美丽说 MinUI](https://github.com/meili/minui)
 
-* 开发框架：[Taro（多端/react）](https://github.com/NervJS/taro)、[mpvue](https://github.com/Meituan-Dianping/mpvue)、 [WePY（vue）](https://github.com/Tencent/wepy)
-
+* 开发框架：[Taro（多端/react）](https://github.com/NervJS/taro)、[mpvue](https://github.com/Meituan-Dianping/mpvue)、[chameleon](https://github.com/didi/chameleon)
 * 插件：[markdown解析](https://github.com/sbfkcel/towxml)
 
 ## 后台UI框架
