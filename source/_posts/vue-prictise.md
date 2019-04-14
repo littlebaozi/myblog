@@ -2,9 +2,7 @@
 title: vue2.0 踩坑
 thumbnail: https://cn.vuejs.org/images/logo.png
 tags:
-  - vue.js
-  - mvvm
-  - vue权限
+  - Vue.js
 categories:
   - 开发
 date: 2017-02-08 09:11:22

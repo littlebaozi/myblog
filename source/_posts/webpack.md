@@ -4,7 +4,6 @@ date: 2016-02-2 10:42:08
 thumbnail: https://webpack.github.io/assets/what-is-webpack.png
 tags:
 - webpack
-- 构建工具
 categories: 
 - 开发
 ---

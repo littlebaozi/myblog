@@ -3,7 +3,7 @@ title: 微信小程序开发记录
 date: 2017-01-16 11:30:48
 thumbnail: https://mp.weixin.qq.com/debug/wxadoc/introduction/image/n.png?t=201718
 tags:
-- 微信小程序
+- 小程序
 categories: 开发
 ---
 
