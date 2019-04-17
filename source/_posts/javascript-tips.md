@@ -89,3 +89,15 @@ new Date().getTime()
 tabPane.contentWindow.location.href = ""; // 会改变src
 tabPane.contentWindow.location.reload();  // 重新设置src，仍然带原来的参数请求；无法重新设置search
 ```
+
+## 调试
+* console.log打印对象
+在浏览器控制台展开查看的时候，是有值的。但实际上，数组是空的。
+```javascript
+var arr = []
+setTimeout(function () {
+    arr.push('a')
+}, 1000)
+console.log(arr)
+console.log(arr.length)
+```
