@@ -55,70 +55,257 @@ success，接口调用成功
 
 ## 二、连接流程
 主要的流程如下：
-初始化蓝牙适配器（openBluetoothAdapter） ->  查找蓝牙设备（startBluetoothDevicesDiscovery）-> 获取设备（getBluetoothDevices） -> 连接设备（createBLEConnection） -> 获取设备服务（getBLEDeviceServices） -> 获取设备特征值（getBLEDeviceCharacteristics） -> 开启蓝牙设备通知（notifyBLECharacteristicValueChange） -> 写入数据（writeBLECharacteristicValue） -> 关闭蓝牙连接（closeBLEConnection）
-
-下图是公司项目中的流程，由于Android和iOS的接口差异和项目需求，所以搞得挺麻烦的。
-
-{% asset_img bleflow.jpeg 蓝牙设备交互流程图 %}
-
-　　对蓝牙设备的读写操作主要是通过对应特征值的操作，在项目中获取到的设备特征值有三个：write、read、notify，其中write、notify是true，表示可以使用相应接口做操作。具体要看自己的项目中蓝牙设备的情况使用。
-　　这个项目中，是用notify来监听设备返回数据的，所以不用手动去read操作。因此过程是不一样的，开启设备通知 -> 写入设备的匹配命令 -> 设备返回成功命令 -> 发送操作命令 -> 设备返回成功命令
-
-　　在项目中，已知设备的MAC地址。Android可以直接使用MAC地址发起连接，createBLEConnection的deviceID就是蓝牙设备的MAC地址。
-
-　　但是ios不一样，deviceID是蓝牙设备的UUID，事先是不知道的，只有对已发现的设备全部连接一遍做一次设备匹配才能确定哪个才是要连接的设备。所以iOS的连接操作是在`wx.onBluetoothDeviceFound`中进行的。每次发现一个设备，就进行一次连接匹配，直到匹配到需要连接的设备后停止设备搜索。（已发现设备会缓存起来，所以我是每次用户操作时都会closeBluetoothAdapter，清空数据）
-
-　　但是问题又来了，发现设备的间隔是很快的，可能两次设备连接同时进行，然后互相产生了干扰导致连接经常失败。我就将发现的设备存入数组中，每次发现设备就push进去。从数组第一个开始连接，连接失败就在数组中移除，然后连接下一个，直到连接到正确的设备。
+初始化蓝牙适配器（openBluetoothAdapter） ->  查找蓝牙设备（startBluetoothDevicesDiscovery） -> 找到设备停止搜索（stopBluetoothDevicesDiscovery）-> 连接设备（createBLEConnection） -> 获取设备服务（getBLEDeviceServices） -> 获取设备特征值（getBLEDeviceCharacteristics） -> 开启蓝牙设备通知（notifyBLECharacteristicValueChange）-> 监听蓝牙通知，返回数据的处理逻辑（onBLECharacteristicValueChange） -> 写入数据（writeBLECharacteristicValue） -> 关闭蓝牙连接（closeBLEConnection）或关闭蓝牙适配器（closeBluetoothAdapter）
 
 ### 1. 初始化蓝牙
-　　小程序是没有打开蓝牙权限的，所以用户没有打开蓝牙需要提示他打开。本来想用[`wx.getBluetoothAdapterState`](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxgetbluetoothadapterstateobject)的`res.adapterState.available`来判断是否打开，但是首次打开蓝牙之后，再关闭，available一直是true。所以，还是直接使用[`wx.openBluetoothAdapter`](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxopenbluetoothadapterobject)来判断，success表明已打开，fail表明未打开。
+　　小程序是没有打开蓝牙权限的，所以用户没有打开蓝牙需要提示他打开。本来想用wx.getBluetoothAdapterState的`res.adapterState.available`来判断是否打开，但是首次打开蓝牙之后，再关闭，available一直是true（后来的项目中发现没这个问题了，大概是修复了）。而且如果没有`wx.openBluetoothAdapter`成功过，`wx.getBluetoothAdapterState`是走fail回调的。所以，还是直接使用wx.openBluetoothAdapter来判断，success表明已打开，fail表明未打开。并且重新搜索操作设备最好还是先`wx.closeBluetoothAdapter`。
 
 ### 2. 连接蓝牙的主要操作
-　　Android可以使用`deviceId`（项目中是MAC地址）直接发起连接；
-　　iOS只能连接已发现的设备（即已知的deviceId必须在接口`wx.getBluetoothDevices`的返回结果中存在），且获取的是设备uuid，项目中只事先知道设备MAC地址，只能全部连接一次发送地址匹配的命令，匹配通过才发送开门命令。
+　　Android可以使用`deviceId`（设备的MAC地址）直接发起连接；
+　　iOS只能连接已发现的设备（即已知的deviceId必须在接口`wx.getBluetoothDevices`的返回结果中存在），且获取的是设备uuid，有个项目中只事先知道设备MAC地址，只能全部连接一次发送设备匹配的命令，匹配通过才能继续发送操作命令。
 
-#### 2.1 搜索蓝牙设备，[wx.startBluetoothDevicesDiscovery](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxstartbluetoothdevicesdiscoveryobject)
-　　可以设置参数`services`（蓝牙设备主 service 的 uuid 列表）, 只查找有指定service uuid的蓝牙设备。
-　　在成功回调中，Android直接发起连接，iOS则监听设备发现。
+#### 2.1 搜索蓝牙设备，wx.startBluetoothDevicesDiscovery
+　　有的设备会广播自己的service ID，可以设置参数`services`（蓝牙设备主 service 的 uuid 列表）, 直接查找需要的设备。
 
-#### 2.2 监听寻找到新设备（IOS），[wx.onBluetoothDeviceFound](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxonbluetoothdevicefoundcallback)
+#### 2.2 监听寻找到新设备，wx.onBluetoothDeviceFound
 　　每次监听到新设备，就发起一次设备连接。
+　　不同的项目对找到的项目可以有不同的处理方式。
+* 如果是能列出搜索到的设备，则可以在回调中，根据设备RSSI进行排序，将信号强（意味着最近）的设备排最开始。用户点击哪个设备就对哪个设备发起连接。
+* 有的设备对用户是有操作权限的。所以一开始用户能操作的设备会有一个列表。当用户操作设备，并搜索到多个设备的时候，我们也无法知道哪个设备是用户要操作的。
+    * 有个项目是发送设备mac地址去做校验的。这就需要将搜索到设备做一次遍历连接发送数据校验。
+    * 有个项目什么都不知道，也不列出搜索到的设备，只能连接第一个发现的设备（也可以连接一定时间内找到的信号最强的设备）
 
-#### 2.3 连接蓝牙设备，[wx.createBLEConnection](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxcreatebleconnectionobject)
-　　 在连接success的回调中：
-1. Android直接调用`wx.writeBLECharacteristicValue`写入数据（写在`getBLEDeviceCharacteristics`成功回调中，第二次发送数据会报10008错，不知道原因）；
-2. `wx.getBLEDeviceServices`获取已发现的设备列表；
-3. 成功回调中`wx.getBLEDeviceCharacteristics`获取指定service的特征值；
-4. 成功回调中，写入数据（iOS），开启特征值变化通知`wx.notifyBLECharacteristicValueChange`
-5. 成功回调中，使用`wx.onBLECharacteristicValueChange`监听特征值变化，然后发送地址匹配命令数据包（Android需要做一个延时发送数据，否则写入数据会报10008错误）；
+#### 2.3 连接蓝牙设备，wx.createBLEConnection
+　　在某个项目中，已知设备的MAC地址。Android可以直接使用MAC地址发起连接，createBLEConnection的deviceID就是蓝牙设备的MAC地址；但是ios不一样，deviceID是蓝牙设备的UUID，事先是不知道的。
 
-#### 2.4 写入数据，[writeBLECharacteristicValue](https://mp.weixin.qq.com/debug/wxadoc/dev/api/bluetooth.html#wxwriteblecharacteristicvalueobject)
+### 3. 数据交互
+
+#### 3.1 获取设备服务
+* 要发送数据监听通知需要先获取服务和特征值。简单点就直接遍历`getBLEDeviceServices`和`getBLEDeviceCharacteristics`获取一下。一般是硬件会告诉你用到的UUID，所以可以直接用。
+* 先要开启特征值变化通知`wx.notifyBLECharacteristicValueChange`。然后使用`wx.onBLECharacteristicValueChange`监听特征值变化。发送数据后设备返回数据在这里监听，逻辑处理也是写在这里的。
+* Android最好做一个延时发送数据，否则写入数据会报10008错误。
+
+#### 3.2 写入数据，writeBLECharacteristicValue
 　　参数value的类型是`ArrayBuffer`（蓝牙设备特征值对应的二进制值）。那`ArrayBuffer`是什么？
 
-> `ArrayBuffer`对象被用来表示一个通用的，固定长度的二进制数据缓冲区。
+> `ArrayBuffer`对象被用来表示一个通用的，固定长度的二进制数据缓冲区。`ArrayBuffer`不能直接操作，而是要通过[类型化数组,`Uint8Array`等](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Typed_arrays)或[`DataView`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/DataView)对象来操作，它们会将缓冲区中的数据表示为特定的格式，并通过这些格式来读写缓冲区的内容。
 
-官方术语比较难理解，可以理解为存储二进制数据的对象。详细解释可以看[MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer),还有一篇通俗点的解释[理解DOMString、Document、FormData、Blob、File、ArrayBuffer数据类型](http://www.zhangxinxu.com/wordpress/2013/10/understand-domstring-document-formdata-blob-file-arraybuffer/)。
-　　`ArrayBuffer`是不能直接读写的，需要使用[`DataView`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/DataView)或者[类型化数组,`Uint8Array`等](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Typed_arrays)来读写。
+> `DataView` 视图是一个可以从 `ArrayBuffer` 对象中读写多种数值类型的底层接口，使用它时，不用考虑不同平台的字节序问题
 
+> `Uint8Array` 数组类型表示一个8位无符号整型数组，创建时内容被初始化为0。创建完后，可以以对象的方式或使用数组下标索引的方式引用数组中的元素。
+
+参考资料[理解DOMString、Document、FormData、Blob、File、ArrayBuffer数据类型](http://www.zhangxinxu.com/wordpress/2013/10/understand-domstring-document-formdata-blob-file-arraybuffer/)。
+
+反正`ArrayBuffer`就是用来存储二进制数据的。而想要用js读写二进制数据则需要类型化数组。
+
+操作二进制数据用两种
+* 1. 使用DataView。
 ```javascript
 // 向蓝牙设备发送一个0x00的16进制数据
-let buffer = new ArrayBuffer(1)·
-let dataView = new DataView(buffer)
-dataView.setUint8(0, 0)
+let buffer = new ArrayBuffer(1) // 创建一个1个字节的缓冲区
+let dataView = new DataView(buffer) // 用DataView来视图化buffer
+dataView.setUint8(0, 2) // 在0处存储2（一个字节大小）
 ```
 
-　　在项目中，需要传一个固定长度的数据命令包，每一位代表不同命令，用两位16进制表示。类型化数组有大部分数组的方法，不过没有concat、splice方法。创建类型化数组时可以直接传入数组转化。
-1. 先创建一个数组，存储需要发送的数据，元素用2位16进制表示，比如`let arr = [0x01, 0xaa]`；
-2. `let bufferView = new Uint8Array(arr)`将数组转换为8位无符号整型数组，就是说长度为arr.length，每个元素是8位大小。为什么用8位呢？ 因为8位二进制正好可以表示2位16进制。8位二进制`0000 0000~ 1111 1111`，2位16进制`0x00~0xFF`，表示的大小范围相同10进制都是0~255。
-3. `bufferView.buffer`转换为`ArrayBuffer` 。`buffer`可以返回由`Uint8Array`引用的`ArrayBuffer`。
-4. 前面已经监听了特征值变化，所以发送数据后会有notify返回，里面有设备返回的数据。返回的数据也是`ArrayBuffer`，所以先用`Uint8Array`转一下，就可以取到数组中的值。想要更直观的查看里面的16进制值，可以使用下面的方式处理：
+* 2. 使用类型化数组
 ```javascript
-Array.prototype.slice.call(decodeDataView).map((_v) => {
+let dataView = new Uint8Array([21,31]);
+console.log(dataView[1]); // 31
+let buffer = dataView.buffer // 获取buffer二进制数据
+```
+
+不同项目会有不同的数据发送格式。有的有16进制的命令串，有的用json。
+
+蓝牙收发数据有20字节的限制，所以需要做分包发送和分包接收处理。小程序里只能手动分割数据，依次调用`wx.writeBLECharacteristicValue`发送数据给设备。
+
+##### 3.2.1 16进制命令形式
+　　需要传一个固定长度的数据命令包，每一位代表不同命令，用两位16进制表示。
+1. 先创建一个数组，存储需要发送的数据，元素用2位16进制表示，比如
+```javascript
+let arr = [0x01, 0xAA]
+```
+
+2. 将数组转换为8位无符号整型数组。长度为arr.length，每个元素是8位大小。
+为什么用8位呢？ 因为8位二进制正好可以表示2位16进制。8位二进制`0000 0000 ~ 1111 1111`，2位16进制`0x00 ~ 0xFF`，表示的都是10进制0~255。（类型化数组有大部分数组的方法，不过没有concat、splice方法。创建类型化数组时可以直接传入数组转化。）
+```javascript
+let bufferView = new Uint8Array(arr)
+```
+或者用DataView，但不如上一种方法方便
+```javascript
+let ab = new ArrayBuffer(arr.length)
+let dv = new DataView(ab)
+for (let i = 0; i < arr.length; i++) {
+    dv.setUint8(i, arr[i], false) // false表示大端写入，实际上不用写
+}
+```
+3. `bufferView.buffer`可以获取`ArrayBuffer` 。
+4. 前面已经监听了特征值变化，所以发送数据后设备会返回数据。返回的数据也是`ArrayBuffer`，所以先用`Uint8Array`转一下，就可以取到数组中的值。
+```javascript
+let dataView = new Uint8Array(buffer); // 这里的buffer是onBLECharacteristicValueChange回调中获取的
+```
+如果是用DataView，则可以用下面的方式：
+```javascript
+let dv = new DataView(buffer)
+let arr = []
+for (let i = 0; i < (new Uint8Array(buffer)).length; i++) {
+    arr[i] = dv.getUint8(i, false) // false表示大端读取，实际上不用写
+}
+```
+想要更直观的查看里面的16进制值，可以使用下面的方式处理：
+```javascript
+Array.prototype.slice.call(dataView).map((_v) => {
     return _v.toString(16)
 })
 ```
 
-　　也可以先使用`var buffer = new ArrayBuffer(arr)`，然后用`new Uint8Array(buffer)`创建视图增删改里面的数据，
+##### 3.2.2 JSON字符串
+有个项目是要求发送JSON字符串形式的数据。JSON数据转字符串直接用`JSON.stringify()`转。相对地，用`JSON.parse()`转回JSON。主要字符串转二进制有点麻烦。硬件要求转`UTF-8`，如果不涉及中文，转`Unicode`也行。关于unicode和utf-8的知识就不展开了，网上有很多相关文章。
+* 如果不涉及中文，可以直接转`Unicode`会很方便，js的`charCodeAt`直接就能获取编码
+```javascript
+// 字符串转unicode数组
+str.split('').map((v) => v.charCodeAt(0))
+
+// unicode转字符串
+String.fromCharCode(...arr)
+```
+* 如果涉及中文，`Unicode`的编码就不能用了，需要转`UTF-8`。下面是网上找到代码。
+```javascript
+/**
+ * Make sure the charset of the page using this script is
+ * set to utf-8 or you will not get the correct results.
+ */
+let highSurrogateMin = 0xd800,
+    highSurrogateMax = 0xdbff,
+    lowSurrogateMin = 0xdc00,
+    lowSurrogateMax = 0xdfff,
+    surrogateBase = 0x10000;
+
+function isHighSurrogate(charCode) {
+    return highSurrogateMin <= charCode && charCode <= highSurrogateMax;
+}
+
+function isLowSurrogate(charCode) {
+    return lowSurrogateMin <= charCode && charCode <= lowSurrogateMax;
+}
+
+function combineSurrogate(high, low) {
+    return ((high - highSurrogateMin) << 10) + (low - lowSurrogateMin) + surrogateBase;
+}
+
+/**
+ * Convert charCode to JavaScript String
+ * handling UTF16 surrogate pair
+ */
+function chr(charCode) {
+    let high, low;
+
+    if (charCode < surrogateBase) {
+        return String.fromCharCode(charCode);
+    }
+
+    // convert to UTF16 surrogate pair
+    high = ((charCode - surrogateBase) >> 10) + highSurrogateMin,
+        low = (charCode & 0x3ff) + lowSurrogateMin;
+
+    return String.fromCharCode(high, low);
+}
+
+/**
+ * Convert JavaScript String to an Array of
+ * UTF8 bytes
+ * @export
+ */
+function stringToBytes(str) {
+    let bytes = [],
+        strLength = str.length,
+        strIndex = 0,
+        charCode, charCode2;
+
+    while (strIndex < strLength) {
+        charCode = str.charCodeAt(strIndex++);
+
+        // handle surrogate pair
+        if (isHighSurrogate(charCode)) {
+            if (strIndex === strLength) {
+                throw new Error('Invalid format');
+            }
+
+            charCode2 = str.charCodeAt(strIndex++);
+
+            if (!isLowSurrogate(charCode2)) {
+                throw new Error('Invalid format');
+            }
+
+            charCode = combineSurrogate(charCode, charCode2);
+        }
+
+        // convert charCode to UTF8 bytes
+        if (charCode < 0x80) {
+            // one byte
+            bytes.push(charCode);
+        } else if (charCode < 0x800) {
+            // two bytes
+            bytes.push(0xc0 | (charCode >> 6));
+            bytes.push(0x80 | (charCode & 0x3f));
+        } else if (charCode < 0x10000) {
+            // three bytes
+            bytes.push(0xe0 | (charCode >> 12));
+            bytes.push(0x80 | ((charCode >> 6) & 0x3f));
+            bytes.push(0x80 | (charCode & 0x3f));
+        } else {
+            // four bytes
+            bytes.push(0xf0 | (charCode >> 18));
+            bytes.push(0x80 | ((charCode >> 12) & 0x3f));
+            bytes.push(0x80 | ((charCode >> 6) & 0x3f));
+            bytes.push(0x80 | (charCode & 0x3f));
+        }
+    }
+
+    return bytes;
+}
+
+/**
+ * Convert an Array of UTF8 bytes to
+ * a JavaScript String
+ * @export
+ */
+function bytesToString(bytes) {
+    let str = '',
+        length = bytes.length,
+        index = 0,
+        byte,
+        charCode;
+
+    while (index < length) {
+        // first byte
+        byte = bytes[index++];
+
+        if (byte < 0x80) {
+            // one byte
+            charCode = byte;
+        } else if ((byte >> 5) === 0x06) {
+            // two bytes
+            charCode = ((byte & 0x1f) << 6) | (bytes[index++] & 0x3f);
+        } else if ((byte >> 4) === 0x0e) {
+            // three bytes
+            charCode = ((byte & 0x0f) << 12) | ((bytes[index++] & 0x3f) << 6) | (bytes[index++] & 0x3f);
+        } else {
+            // four bytes
+            charCode = ((byte & 0x07) << 18) | ((bytes[index++] & 0x3f) << 12) | ((bytes[index++] & 0x3f) << 6) | (bytes[index++] & 0x3f);
+        }
+
+        str += chr(charCode);
+    }
+
+    return str;
+}
+export {
+    stringToBytes,
+    bytesToString
+};
+
+```
+
 
 ## 三、iOS和Android接口使用差异
 * IOS使用蓝牙设备UUID作为deviceId连接设备，Android使用蓝牙设备的MAC地址作为deviceId连接设备。
