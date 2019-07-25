@@ -43,7 +43,6 @@ install:
 script:
 - hexo clean
 - hexo generate
-- hexo deploy
 after_success:
 - cd ./public
 - git init
