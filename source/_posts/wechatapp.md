@@ -201,7 +201,7 @@ Page({
 * 重置高度使用em单位
 
 ### scroll-view
-　　上下布局，下面scroll-view高度自动撑满：
+#### 上下布局，下面scroll-view高度自动撑满：
 * 一种方式是计算高度，设置scroll-view高度。但是设置了tabbar的话，没有显示tabbar的页面，windowHeight是减去tabbar的高度。可以新增的screenHeight。然而如果用rpx布局，计算误差还是存在的。
 * 另一种方式是css来布局。
 
@@ -221,6 +221,10 @@ Page({
     box-sizing: border-box;
 }
 ```
+
+#### 横向scroll
+* `scroll-view`一定要设置宽度和`white-space: nowrap`
+* 子元素一定要设置宽度和`display:inline-block`
 
 ## API
 　　screenHeight, SDKVersion 基础库版本 1.1.0 开始支持, 微信客户端 6.5.6 版本开始支持。
