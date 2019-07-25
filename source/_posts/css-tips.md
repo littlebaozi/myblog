@@ -6,8 +6,11 @@ categories: A常用
 ---
 
 ## 布局
+### flex
 * flex左右布局，右侧内容溢出，右侧样式：`flex: 1;min-width: 0;`
+* flex子元素宽度自身宽度 `flex: 0 0 auto`
 
+### 文字省略号
 * 多行省略号
 ```css
 element{
@@ -25,6 +28,7 @@ element {
     text-overflow:ellipsis;
 }
 ```
+
 
 ## 字体
 * 移动端字体
