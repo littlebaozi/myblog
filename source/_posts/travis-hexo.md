@@ -1,7 +1,9 @@
 ---
 title: Travis自动部署hexo到git pages
 date: 2019-07-25 10:09:27
-tags: 折腾
+tags:
+- hexo
+categories: 折腾
 ---
 
 [参考文章](https://segmentfault.com/a/1190000009054888)
