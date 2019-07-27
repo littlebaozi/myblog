@@ -104,6 +104,12 @@ toc: true
 * 其他：[字蛛](http://font-spider.org/)
 * npm工具：nrm（npm源切换）、npm-check（npm包更新检查）、serve（快速启动服务器）、windows-build-tools（windows安装npm包各种问题可以装这个解决）
 * API：[easy mock](https://www.easy-mock.com)
-
+* sketch插件
+  * [SketchI18N](https://github.com/cute/SketchI18N)
+  * [chart](https://github.com/pavelkuligin/chart)
+  * [蓝湖](https://lanhuapp.com/mac)
+  * [runner](https://sketchrunner.com/)
+  * [Sketch Measure](http://utom.design/measure/)
+  * [kitchen]https://kitchen.alipay.com/
 ## 资源
 * 字体：[iconfont](http://www.iconfont.cn/)
