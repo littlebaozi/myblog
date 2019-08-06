@@ -236,3 +236,11 @@ tabbar高度是`56px`，需要手动加上。
 　　url使用的是相对路径，不是app.json里配置的复制过来就行了。
 * <del>小程序已经移除promise，需要用到第三方promise库</del>，推荐[es6-promise](https://github.com/stefanpenner/es6-promise)，网上有反映bluebird在android真机上报错。</del>更新之后Promise可以直接使用了。
 * Android能访问接口，IOS不能访问接口并且报错“此服务器的证书无效”。那应该是https的证书问题。网上说，startcom的证书在IOS10上无法使用。
+
+## 小程序框架
+### vant-weapp
+#### [dialog](ps://youzan.github.io/vant-weapp/#/dialog)
+组件调用dialog，并启用`async-close`时，关闭确定按钮loading：
+``` javascript
+this.selectComponent('#dialog').stopLoading(); // #dialog是Dialog组件上设置的id
+```
