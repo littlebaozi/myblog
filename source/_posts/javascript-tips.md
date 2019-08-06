@@ -1,7 +1,7 @@
 ---
 title: JavaScript技巧记录
 date: 2017-08-02 15:25:25
-tags: JavaScript
+tags: javascript
 categories: A常用
 ---
 
