@@ -5,7 +5,7 @@ thumbnail: https://t.75team.com/static/img/badges.png
 tags: 
 - JavaScript
 categories: 
-- 学习
+- 开发
 ---
 
 

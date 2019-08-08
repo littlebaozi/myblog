@@ -30,6 +30,8 @@ Obj.getStr.call();
 Obj.getStr.bind(this)();
 ```
 
+<!-- more -->
+
 ## 数组
 * for...of 与 for...in
 `for...in` 遍历key；`for...of` 遍历value
