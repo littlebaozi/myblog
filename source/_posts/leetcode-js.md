@@ -15,14 +15,33 @@ category: 开发
   * 题目要求反转句子中单词的顺序，而不是整个反转。
   * 单词间空格只有一个
 2. 解题
-  * 空格分割
+  * 按空格分割
 ```javascript
-// spilit句子为单词数组
-// 遍历单词数组，split单词为字符数组并reverse，join字符
-// join单词数组
+// 以空格分割句子为数组
+// 遍历数组，将单词分割成字母的数组，反转数组，还原单词
+// 拼接单词
 const reverseWords = (s) => {
+  // split也可以使用正则，此处可以使用：/\s/g
     return s.split(' ').map((item) => {
         return item.split('').reverse().join('')
     }).join(' ')
 }
 ```
+  * 按单词分割
+```javascript
+const reverseWords = (s) => {
+  return s.match(/\S+/g).map((item) => {
+        return item.split('').reverse().join('')
+    }).join(' ')
+}
+```
+
+* 一行解体
+```javascript
+const reverseWords = s => s.split('').reverse().join('').split(' ').reverse().join(' ')
+```
+
+3. 知识点
+* `split`参数可以是正则
+* `match`
+* 数组方法：`reverse`、`join`
