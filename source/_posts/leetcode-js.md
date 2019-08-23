@@ -42,6 +42,12 @@ const reverseWords = s => s.split('').reverse().join('').split(' ').reverse().jo
 ```
 
 3. 知识点
-* `split`参数可以是正则
-* `match`
-* 数组方法：`reverse`、`join`
+1. `str.split([separator[, limit]])`
+  * 参数：separator（必须，字符串或正则）、limit（置顶返回的数组最大长度）。
+  * separator是空字符串`""`，则会分割每个字符
+2. `arr.join([separator])`
+3. `str.match(regexp)` regexp有g，执行全局搜索
+4. 正则
+  * 元字符`\s`匹配任意空白符
+  * 反义`\S`匹配任意不是空白符的字符
+  * 标志`g`全局搜索

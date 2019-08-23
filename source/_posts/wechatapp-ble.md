@@ -114,10 +114,6 @@ console.log(dataView[1]); // 31
 let buffer = dataView.buffer // 获取buffer二进制数据
 ```
 
-不同项目会有不同的数据发送格式。有的有16进制的命令串，有的用json。
-
-蓝牙收发数据有20字节的限制，所以需要做分包发送和分包接收处理。小程序里只能手动分割数据，依次调用`wx.writeBLECharacteristicValue`发送数据给设备。
-
 ##### 3.2.1 16进制命令形式
 　　需要传一个固定长度的数据命令包，每一位代表不同命令，用两位16进制表示。
 1. 先创建一个数组，存储需要发送的数据，元素用2位16进制表示，比如
@@ -168,143 +164,64 @@ str.split('').map((v) => v.charCodeAt(0))
 // unicode转字符串
 String.fromCharCode(...arr)
 ```
-* 如果涉及中文，`Unicode`的编码就不能用了，需要转`UTF-8`。下面是网上找到代码。
+* 如果涉及中文，`Unicode`的编码就不能用了，需要转`UTF-8`。且一个中文子一定要在一个包中，否则硬件程序那边可能无法正确解码。
 ```javascript
-/**
- * Make sure the charset of the page using this script is
- * set to utf-8 or you will not get the correct results.
- */
-let highSurrogateMin = 0xd800,
-    highSurrogateMax = 0xdbff,
-    lowSurrogateMin = 0xdc00,
-    lowSurrogateMax = 0xdfff,
-    surrogateBase = 0x10000;
-
-function isHighSurrogate(charCode) {
-    return highSurrogateMin <= charCode && charCode <= highSurrogateMax;
+function encodeUtf8(text) {
+  const code = encodeURIComponent(text);
+  const bytes = [];
+  for (var i = 0; i < code.length; i++) {
+    const c = code.charAt(i);
+    if (c === '%') {
+      const hex = code.charAt(i + 1) + code.charAt(i + 2);
+      const hexVal = parseInt(hex, 16);
+      bytes.push(hexVal);
+      i += 2;
+    } else bytes.push(c.charCodeAt(0));
+  }
+  return bytes;
 }
 
-function isLowSurrogate(charCode) {
-    return lowSurrogateMin <= charCode && charCode <= lowSurrogateMax;
+function decodeUtf8(bytes) {
+  var encoded = "";
+  for (var i = 0; i < bytes.length; i++) {
+    encoded += '%' + bytes[i].toString(16);
+  }
+  return decodeURIComponent(encoded);
 }
-
-function combineSurrogate(high, low) {
-    return ((high - highSurrogateMin) << 10) + (low - lowSurrogateMin) + surrogateBase;
-}
-
-/**
- * Convert charCode to JavaScript String
- * handling UTF16 surrogate pair
- */
-function chr(charCode) {
-    let high, low;
-
-    if (charCode < surrogateBase) {
-        return String.fromCharCode(charCode);
-    }
-
-    // convert to UTF16 surrogate pair
-    high = ((charCode - surrogateBase) >> 10) + highSurrogateMin,
-        low = (charCode & 0x3ff) + lowSurrogateMin;
-
-    return String.fromCharCode(high, low);
-}
-
-/**
- * Convert JavaScript String to an Array of
- * UTF8 bytes
- * @export
- */
-function stringToBytes(str) {
-    let bytes = [],
-        strLength = str.length,
-        strIndex = 0,
-        charCode, charCode2;
-
-    while (strIndex < strLength) {
-        charCode = str.charCodeAt(strIndex++);
-
-        // handle surrogate pair
-        if (isHighSurrogate(charCode)) {
-            if (strIndex === strLength) {
-                throw new Error('Invalid format');
-            }
-
-            charCode2 = str.charCodeAt(strIndex++);
-
-            if (!isLowSurrogate(charCode2)) {
-                throw new Error('Invalid format');
-            }
-
-            charCode = combineSurrogate(charCode, charCode2);
-        }
-
-        // convert charCode to UTF8 bytes
-        if (charCode < 0x80) {
-            // one byte
-            bytes.push(charCode);
-        } else if (charCode < 0x800) {
-            // two bytes
-            bytes.push(0xc0 | (charCode >> 6));
-            bytes.push(0x80 | (charCode & 0x3f));
-        } else if (charCode < 0x10000) {
-            // three bytes
-            bytes.push(0xe0 | (charCode >> 12));
-            bytes.push(0x80 | ((charCode >> 6) & 0x3f));
-            bytes.push(0x80 | (charCode & 0x3f));
-        } else {
-            // four bytes
-            bytes.push(0xf0 | (charCode >> 18));
-            bytes.push(0x80 | ((charCode >> 12) & 0x3f));
-            bytes.push(0x80 | ((charCode >> 6) & 0x3f));
-            bytes.push(0x80 | (charCode & 0x3f));
-        }
-    }
-
-    return bytes;
-}
-
-/**
- * Convert an Array of UTF8 bytes to
- * a JavaScript String
- * @export
- */
-function bytesToString(bytes) {
-    let str = '',
-        length = bytes.length,
-        index = 0,
-        byte,
-        charCode;
-
-    while (index < length) {
-        // first byte
-        byte = bytes[index++];
-
-        if (byte < 0x80) {
-            // one byte
-            charCode = byte;
-        } else if ((byte >> 5) === 0x06) {
-            // two bytes
-            charCode = ((byte & 0x1f) << 6) | (bytes[index++] & 0x3f);
-        } else if ((byte >> 4) === 0x0e) {
-            // three bytes
-            charCode = ((byte & 0x0f) << 12) | ((bytes[index++] & 0x3f) << 6) | (bytes[index++] & 0x3f);
-        } else {
-            // four bytes
-            charCode = ((byte & 0x07) << 18) | ((bytes[index++] & 0x3f) << 12) | ((bytes[index++] & 0x3f) << 6) | (bytes[index++] & 0x3f);
-        }
-
-        str += chr(charCode);
-    }
-
-    return str;
-}
-export {
-    stringToBytes,
-    bytesToString
-};
-
 ```
+
+#### 3.3 数据分包发送
+蓝牙收发数据有20字节的限制，所以需要做分包发送和分包接收处理。小程序里只能手动分割数据，依次调用`wx.writeBLECharacteristicValue`发送数据给设备。
+通常数据包中会有几位是放置数据长度的，可以根据数据长度，循环发送和接收。
+
+数据包内容举例：`HEAD00000020{"id":1,"name":"名字"}`
+* `HEAD`是数据头部标识
+* `00000020`是标识后面命令长度
+
+##### 3.3.1 发送
+
+##### 3.3.2 字符串的接收
+````javascript
+let responseStr = '' // 用于拼接接收的命令
+let responseLength = -1 // 记录长度
+
+wx.onBLECharacteristicValueChange((characteristicRes) => {
+	let resData = decodeUtf8(bufferToArray(characteristicRes.value)); // 将接收到的buffer转成字符串
+
+	if (/^HEAD/.test(resData)) {
+		// 检测头部标志，有则为数据包开头
+		this.pageData.responseLength = parseInt(resData.slice(4, 12)); // 截取4-12数据，获取命令长度
+		this.pageData.responseStr = resData.slice(12); // 截取命令内容
+	} else {
+		// 后续数据
+		this.pageData.responseStr += resData; // 拼接命令式数据
+		if (this.pageData.responseLength == this.pageData.responseStr.length) {
+			// 判断长度是否和给到的长度相等
+			let jsonData = JSON.parse(this.pageData.responseStr); // 转成json
+		}
+	}
+});
+````
 
 
 ## 三、iOS和Android接口使用差异
