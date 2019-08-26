@@ -36,7 +36,7 @@ const reverseWords = (s) => {
 }
 ```
 
-  * 一行解体
+  * 一行解题
 ```javascript
 const reverseWords = s => s.split('').reverse().join('').split(' ').reverse().join(' ')
 ```
