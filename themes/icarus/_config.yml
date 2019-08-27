@@ -140,16 +140,16 @@ widgets:
         # Widget name
         type: toc
         # Where should the widget be placed, left or right
-        position: left
-    -
+        position: right
+    # -
         # Widget name
-        type: links
+        # type: links
         # Where should the widget be placed, left or right
-        position: left
+        # position: left
         # Links to be shown in the links widget
-        links:
-            Hexo: 'https://hexo.io'
-            PPOffice: 'https://github.com/ppoffice'
+        # links:
+            # Hexo: 'https://hexo.io'
+            # PPOffice: 'https://github.com/ppoffice'
     -
         # Widget name
         type: category
@@ -160,21 +160,21 @@ widgets:
         type: tagcloud
         # Where should the widget be placed, left or right
         position: left
-    -
+    # -
         # Widget name
-        type: recent_posts
+        # type: recent_posts
         # Where should the widget be placed, left or right
-        position: right
+        # position: right
     -
         # Widget name
         type: archive
         # Where should the widget be placed, left or right
         position: right
-    -
+    # -
         # Widget name
-        type: tag
+        # type: tag
         # Where should the widget be placed, left or right
-        position: right
+        # position: right
 # Other plugin settings
 plugins:
     # Enable page animations

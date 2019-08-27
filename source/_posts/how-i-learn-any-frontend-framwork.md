@@ -1,5 +1,6 @@
 ---
 title: 【译】我是如何学习前端框架的
+toc: true
 date: 2019-08-26 09:04:24
 tags: 框架
 category: 翻译

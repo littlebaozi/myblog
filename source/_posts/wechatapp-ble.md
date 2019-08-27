@@ -1,5 +1,6 @@
 ---
 title: 微信小程序 - 蓝牙接口
+toc: true
 thumbnail: https://pic.baike.soso.com/pqpic/baikepic/34576/cut-20140506154508-492844147.jpg/0
 date: 2017-05-23 11:00:08
 tags: 
