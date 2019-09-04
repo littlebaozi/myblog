@@ -10,7 +10,9 @@ category: 学习
 ```javascript
 function dateFormat (date, format) {
   if (/(y+)/.test(format)) {
-    // RegExp.$1.length 匹配到的y长度 substring(startIndex, endIndex)
+    // RegExp.$1 匹配到的第一个字符串
+    // RegExp.$1.length 匹配到的y长度
+    // 年不一定是4位 substring(startIndex, endIndex)
     format = format.replace(RegExp.$1, date.getFullYear().toString().substring(4 - RegExp.$1.length))
   }
 
@@ -24,7 +26,7 @@ function dateFormat (date, format) {
   
   for(k in o) {
     if(new RegExp('(' + k + ')').test(format)) {
-      // 1 2 2 ;1 1 2; 2 1 1; 2 2 2
+      // 补零 日期长度 2 匹配长度1 2，不补零 日期长度 1 匹配长度1（不补领） 2（补零）
       format = format.replace(RegExp.$1, '00'.substring(RegExp.$1.length > o[k].toString().length ? 1 : 2)+o[k])
     }
   }
