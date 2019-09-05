@@ -3,7 +3,7 @@ title: 奇舞特训营 JavaScript （第 3 课）变量、值与类型
 date: 2017-06-19 21:32:51
 thumbnail: https://t.75team.com/static/img/badges.png
 tags: 
-- JavaScript
+- javaScript
 categories: 
 - 开发
 ---
