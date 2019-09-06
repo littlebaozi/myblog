@@ -26,8 +26,9 @@ function dateFormat (date, format) {
   
   for(k in o) {
     if(new RegExp('(' + k + ')').test(format)) {
-      // 补零 日期长度 2 匹配长度1 2，不补零 日期长度 1 匹配长度1（不补领） 2（补零）
+      // 补零 日期长度 2 匹配长度1 2，不补零 日期长度 1 匹配长度1（不补零） 2（补零）
       format = format.replace(RegExp.$1, '00'.substring(RegExp.$1.length > o[k].toString().length ? 1 : 2)+o[k])
+      // format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k].toString() : '00'.substring(o[k].toString().length))+o[k].toString()
     }
   }
   
