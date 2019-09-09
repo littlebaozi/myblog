@@ -14,8 +14,23 @@ category: 学习
 ## vue.js使用
 ### [vm.$set](https://cn.vuejs.org/v2/api/#vm-set)
 1. 使用情景
-
+对象新增属性或者数组新增元素，使其具有响应式，并自动更新视图。
 2. 使用方式
+`vm.$set( target, propertyName/index, value )`
+
+```javascript
+export default {
+  data: {
+    user: {
+      name: '名字',
+      gender: '男'
+    }
+  },
+  mounted () {
+    this.$set(this.user, 'age', 24)
+  }
+}
+```
 
 ### [vm.$nextTick](https://cn.vuejs.org/v2/api/#vm-nextTick)
 1. 使用情景
