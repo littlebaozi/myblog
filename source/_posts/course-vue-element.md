@@ -1,10 +1,26 @@
 ---
-title: vue element 慕课教程
+title: Vue.js高仿饿了么外卖 总结
 date: 2019-08-30 15:05:27
 tags: vue
 category: 学习
 ---
 
+看完视频后总结一下
+
+<!-- more -->
+
+## better-scroll菜单
+
+## vue.js使用
+### [vm.$set](https://cn.vuejs.org/v2/api/#vm-set)
+1. 使用情景
+
+2. 使用方式
+
+### [vm.$nextTick](https://cn.vuejs.org/v2/api/#vm-nextTick)
+1. 使用情景
+
+2. 使用方式
 
 ## 数字-星星组件（半星）
 1. 教程实现
