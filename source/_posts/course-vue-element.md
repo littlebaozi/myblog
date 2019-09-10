@@ -9,8 +9,6 @@ category: 学习
 
 <!-- more -->
 
-## better-scroll菜单
-
 ## vue.js使用
 ### [vm.$set](https://cn.vuejs.org/v2/api/#vm-set)
 1. 使用情景
@@ -33,9 +31,21 @@ export default {
 ```
 
 ### [vm.$nextTick](https://cn.vuejs.org/v2/api/#vm-nextTick)
-1. 使用情景
+> Vue 异步执行 DOM 更新。只要观察到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据改变。如果同一个 watcher 被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和 DOM 操作上非常重要。然后，在下一个的事件循环“tick”中，Vue 刷新队列并执行实际 (已去重的) 工作。Vue 在内部尝试对异步队列使用原生的 Promise.then 和MessageChannel，如果执行环境不支持，会采用 setTimeout(fn, 0)代替。
 
+
+1. 使用情景
+数据改变后，dom更新不是立即执行的。操作dom的操作写在`$nextTick`中
 2. 使用方式
+
+## 1px
+
+## (better-scroll)[https://ustbhuangyi.github.io/better-scroll/doc/zh-hans/]
+1. 初始化better-scroll
+
+2. 点击左侧菜单，列表滚动到对应位置
+
+3. 滚动列表，左侧菜单高亮对应
 
 ## 数字-星星组件（半星）
 1. 教程实现
