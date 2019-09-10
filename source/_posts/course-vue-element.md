@@ -38,7 +38,52 @@ export default {
 数据改变后，dom更新不是立即执行的。操作dom的操作写在`$nextTick`中
 2. 使用方式
 
-## 1px
+## 1px实现
+当`min-device-pixel-ratio`大于等于1.5时，缩小为原来的0.7；当大于等于2时，缩小为原来的0.5倍。
+```css
+/* stylus */
+@media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5)
+  .border-1px
+    &::after
+      -webkit-transform: scaleY(0.7)
+      transform: scaleY(0.7)
+
+@media (-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2)
+  .border-1px
+    &::after
+      -webkit-transform: scaleY(0.5)
+      transform: scaleY(0.5)
+```
+## 多倍图
+[设备像素比devicePixelRatio](https://de veloper.mozilla.org/zh-CN/docs/Web/API/Window/devicePixelRatio)
+
+当`min-device-pixel-ratio`大于等于3时，使用3倍图。
+```css
+/* stylus */
+bg-image($url)
+  background-image: url($url+"@2x.png")
+  @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3)
+    background-image: url($url+"@3x.png")
+```
+## flex布局
+一侧固定宽度，一侧自动宽度
+```html
+<div class="wrapper">
+  <div class="left"></div>
+  <div class="right"></div>
+</div>
+```
+```css
+.wrapper {
+  display: flex
+}
+.left {
+  flex: 1;
+}
+.right {
+  flex: 0 0 20px;
+}
+```
 
 ## (better-scroll)[https://ustbhuangyi.github.io/better-scroll/doc/zh-hans/]
 1. 初始化better-scroll
@@ -46,6 +91,10 @@ export default {
 2. 点击左侧菜单，列表滚动到对应位置
 
 3. 滚动列表，左侧菜单高亮对应
+
+```html
+
+```
 
 ## 数字-星星组件（半星）
 1. 教程实现
