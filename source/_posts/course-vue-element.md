@@ -93,7 +93,40 @@ bg-image($url)
 3. 滚动列表，左侧菜单高亮对应
 
 ```html
+<template>
+  <div class="goods">
+    <div class="menu-wrapper" ref="menuWrapper">
+      <div class="menu">
+        <div class="item border-1px" :class="{'current': currentIndex == index}" @click="selectMenu(index)" v-for="(item, index) in goods" :key="index">
+          <!-- ... -->
+        </div>
+      </div>
+    </div>
+    <div class="foods-wrapper" ref="foodsWrapper">
+      <ul class="food-category">
+        <li v-for="(item, index) in goods" :key="index" class="food-list-hook">
+          <!-- ... -->
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+<script>
+import BScroll from 'better-scroll'
+export default {
+  data () {
+    return {
+      currentIndex: 0,
+      goods: []
+    }
+  },
+  methods: {
+    selectMenu(index) {
 
+    }
+  }
+}
+</script>
 ```
 
 ## 数字-星星组件（半星）
