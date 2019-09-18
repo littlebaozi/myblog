@@ -87,10 +87,11 @@ bg-image($url)
 
 ## (better-scroll)[https://ustbhuangyi.github.io/better-scroll/doc/zh-hans/]
 1. 初始化better-scroll
-
+初始化左右两侧。监听右侧scroll滚动。
 2. 点击左侧菜单，列表滚动到对应位置
-
+点击左侧菜单，获取index。根据index，scroll到右侧对应位置
 3. 滚动列表，左侧菜单高亮对应
+监听滚动，由scrollTop计算出对应的index
 
 ```html
 <template>
@@ -117,13 +118,27 @@ export default {
   data () {
     return {
       currentIndex: 0,
-      goods: []
+      goods: [],
+      scrollTop: 0
     }
+  },
+  mounted () {
+    this._initScroll()
+  },
+  computed: {
+    // 根据scrollTop计算当前菜单的index，高亮左侧菜单选中
+    currentIndex () {}
   },
   methods: {
     selectMenu(index) {
 
-    }
+    },
+    // 初始化scroll
+    _initScroll() {
+
+    },
+    // 计算右侧各个区块的高度
+    _calulateHeight() {}
   }
 }
 </script>
