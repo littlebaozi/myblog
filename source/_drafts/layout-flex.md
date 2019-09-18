@@ -19,7 +19,7 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 起止线表示轴线的起点和终点，包含main start、main end和corss start、 corss end
 
 ## 容器属性
-
+**第一个属性值为默认值**
 ### display
 设置元素的flex布局
 * flex 容器表现类似`block`
@@ -27,20 +27,34 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 
 ### flex-direction
 主轴的方向
+* row
+* column
 ### justify-content
 主轴方向元素对齐方式
+* flex-start
+* flex-end
+* center
+* space-between
+* space-around
 ### align-items
 交叉轴方向元素对齐方式
+* flex-start
+* flex-end
+* center
 ### flex-wrap
 元素一行排不下时，是否换行
+* nowrap
+* wrap
+
 
 ## 元素属性
 
+### flex-grow
+
+### flex-shrink
+
+### flex-basis
+
 ### flex
-#### 1. flex-grow
-
-#### 2. flex-shrink
-
-#### 3. flex-basis
 
 ### align-self
