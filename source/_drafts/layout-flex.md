@@ -27,24 +27,31 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 
 ### flex-direction
 主轴的方向
-* row
-* column
+* row 横向
+* column 纵向
+
+### flex-wrap
+元素一行排不下时，是否换行
+* nowrap
+* wrap
+
+### flex-flow
+`flex-direction`和`flex-wrap`的缩写
+*  <flex-direction> || <flex-wrap>;
+
 ### justify-content
 主轴方向元素对齐方式
 * flex-start
 * flex-end
 * center
-* space-between
+* space-between 
 * space-around
+
 ### align-items
 交叉轴方向元素对齐方式
 * flex-start
 * flex-end
 * center
-### flex-wrap
-元素一行排不下时，是否换行
-* nowrap
-* wrap
 
 
 ## 元素属性

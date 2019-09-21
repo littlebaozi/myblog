@@ -87,11 +87,14 @@ bg-image($url)
 
 ## (better-scroll)[https://ustbhuangyi.github.io/better-scroll/doc/zh-hans/]
 1. 初始化better-scroll
-初始化左右两侧。监听右侧scroll滚动。
+  * 初始化左右两侧的scroll。
+  * 监听右侧scroll滚动，存储scrollY。scrollY可以判断滚动到哪个菜单区块
+  * 计算右侧每个区块到顶部的高度
 2. 点击左侧菜单，列表滚动到对应位置
-点击左侧菜单，获取index。根据index，scroll到右侧对应位置
+  * 点击左侧菜单，获取index。
+  * 根据index，scroll到右侧对应位置
 3. 滚动列表，左侧菜单高亮对应
-监听滚动，由scrollTop计算出对应的index
+  * 监听滚动，根据scrollY，判断位于哪个区间，得到对应的index
 
 ```html
 <template>
@@ -119,11 +122,15 @@ export default {
     return {
       currentIndex: 0,
       goods: [],
+      listHeight: [],
       scrollTop: 0
     }
   },
   mounted () {
-    this._initScroll()
+    this.$nextTick(() => {
+      this._initScroll()
+      this._calulateHeight()
+    })
   },
   computed: {
     // 根据scrollTop计算当前菜单的index，高亮左侧菜单选中
@@ -135,10 +142,21 @@ export default {
     },
     // 初始化scroll
     _initScroll() {
-
+      this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+        click: true // 可以点击
+      })
+      this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+        click: true,
+        probeType: 3 // 不仅在屏幕滑动的过程中，而且在 momentum 滚动动画运行过程中实时派发 scroll 事件
+      })
     },
-    // 计算右侧各个区块的高度
-    _calulateHeight() {}
+    // 计算右侧各个区块的高度，累加
+    _calulateHeight() {
+      let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+      foodList.forEach((item) => {
+        item.cl
+      })
+    }
   }
 }
 </script>
