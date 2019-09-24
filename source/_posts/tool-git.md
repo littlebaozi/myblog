@@ -1,11 +1,12 @@
 ---
 title: git 操作实践
-date: 2019-07-26 15:36:39
 tags:
-- git
+  - git
 categories: 开发
-thumbnail: https://git-scm.com/images/logo@2x.png
+thumbnail: 'https://git-scm.com/images/logo@2x.png'
+date: 2019-07-26 15:36:39
 ---
+
 
 ## [修改最近一次提交](https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2)
 提交了一次后，发现漏掉了文件 `--amend`

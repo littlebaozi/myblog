@@ -134,11 +134,14 @@ export default {
   },
   computed: {
     // 根据scrollTop计算当前菜单的index，高亮左侧菜单选中
-    currentIndex () {}
+    currentIndex () {
+      
+    }
   },
   methods: {
     selectMenu(index) {
-
+      // 使用scrollToElement滚动到目标元素上
+      this.foodsScroll.scrollToElement(this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')[index])
     },
     // 初始化scroll
     _initScroll() {
@@ -153,9 +156,13 @@ export default {
     // 计算右侧各个区块的高度，累加
     _calulateHeight() {
       let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
-      foodList.forEach((item) => {
-        item.cl
-      })
+      // 第一个：0；第二个：0的高度；最后一个n-1的高度
+      let height = 0
+      this.listHeight.push(height)
+      for (let i = 0; i < foodList.length; i++) {
+       height += foodList[i].clientHeight // 累加高度
+       this.listHeight.push(height)
+      }
     }
   }
 }
