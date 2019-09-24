@@ -14,3 +14,13 @@ hexo publish article-name # 发布草稿
 * css总结 `css-`
 * 课程 `course-`
 * 开发实践 `prictice-`
+
+## categories
+* 读书人的事
+* 开发
+
+## tags
+* 读书
+* h5
+* 微信
+* 小程序

@@ -29,11 +29,13 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 主轴的方向
 * row 横向
 * column 纵向
+* row-reverse 横向反向排列
+* column-reverse 纵向反向排列
 
 ### flex-wrap
 元素一行排不下时，是否换行
-* nowrap
-* wrap
+* nowrap 不换行
+* wrap 换行
 
 ### flex-flow
 `flex-direction`和`flex-wrap`的缩写
@@ -44,7 +46,7 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 * flex-start
 * flex-end
 * center
-* space-between 
+* space-between 两边对齐，中间间距相等
 * space-around
 
 ### align-items
@@ -61,7 +63,8 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 ### flex-shrink
 
 ### flex-basis
-
+`flex-grow`、`flex-shrink`、`flex-basis`的缩写
+* <flex-grow> || <flex-shrink> || <flex-basis>
 ### flex
 
 ### align-self
