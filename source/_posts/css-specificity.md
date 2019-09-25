@@ -2,22 +2,26 @@
 title: CSS优先级
 tags: css
 category: 开发
-date: 2019-09-23 19:18:01
+date: 2019-09-25 08:50:05
 ---
-
-
 
 
 ## 基础规则
 * 优先级相同时，后面的会覆盖前面的
 * html的class没有先后影响
 
-<script async src="//jsfiddle.net/littlebaozi/rv9pw4qL/2/embed/html/"></script>
+<!-- more -->
+
+<script async src="//jsfiddle.net/littlebaozi/rv9pw4qL/32/embed/html,css,result/"></script>
 
 ## 选择器规则
+优先级递减
 1. 内联样式
 2. id选择器
 3. class选择器
-4. tag选择器
+4. type选择器
+
+**关系选择符**不影响优先级
 
 ## `!important`
+如果设置了`!important`，就会覆盖其他所有的样式。
