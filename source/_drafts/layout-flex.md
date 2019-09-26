@@ -27,15 +27,19 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 
 ### flex-direction
 主轴的方向
-* row 横向
-* column 纵向
-* row-reverse 横向反向排列
-* column-reverse 纵向反向排列
+* row 横向，起点左边
+* column 纵向，起点上边
+* row-reverse 横向反向排列，起点右边
+* column-reverse 纵向反向排列，起点下边
+
+<script async src="//jsfiddle.net/littlebaozi/r3pod489/embed/html,css,result/"></script>
 
 ### flex-wrap
 元素一行排不下时，是否换行
 * nowrap 不换行
 * wrap 换行
+
+<script async src="//jsfiddle.net/littlebaozi/wk21hpq5/embed/html,css,result/"></script>
 
 ### flex-flow
 `flex-direction`和`flex-wrap`的缩写

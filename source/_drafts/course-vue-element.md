@@ -122,7 +122,7 @@ export default {
     return {
       currentIndex: 0,
       goods: [],
-      listHeight: [],
+      listHeight: [], // [0, height-1, ..., hegiht-1+...height-n]
       scrollTop: 0
     }
   },
@@ -135,13 +135,22 @@ export default {
   computed: {
     // 根据scrollTop计算当前菜单的index，高亮左侧菜单选中
     currentIndex () {
-      
+      for(let i; i < this.listHeight.length; i++) {
+        if (!height2 || this.scrollTop >= this.listHeight[i] && this.scrollTop < this.listHeight[i+1]) {
+          return i
+        }
+      }
+
+      return 0;
     }
   },
   methods: {
-    selectMenu(index) {
+    selectMenu(index, event) {
+      if (!event._constructed) {
+          return;
+        }
       // 使用scrollToElement滚动到目标元素上
-      this.foodsScroll.scrollToElement(this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')[index])
+      this.foodsScroll.scrollToElement(this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')[index], 300)
     },
     // 初始化scroll
     _initScroll() {
@@ -152,6 +161,10 @@ export default {
         click: true,
         probeType: 3 // 不仅在屏幕滑动的过程中，而且在 momentum 滚动动画运行过程中实时派发 scroll 事件
       })
+
+      this.foodsScroll.on('scroll', (pos) => {
+        this.scrollY = Math.abs(Math.round(pos.y));
+      });
     },
     // 计算右侧各个区块的高度，累加
     _calulateHeight() {
