@@ -38,6 +38,7 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 元素一行排不下时，是否换行
 * nowrap 不换行
 * wrap 换行
+* 
 
 <script async src="//jsfiddle.net/littlebaozi/wk21hpq5/embed/html,css,result/"></script>
 
@@ -55,12 +56,24 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 
 ### align-items
 交叉轴方向元素对齐方式
+* 
 * flex-start
 * flex-end
 * center
+* 
+
+## align-content
+多行元素时，交叉轴上到对齐方式
+* 
+* flex-start
+* flex-end
+* center
+* space-between
+* space-around
 
 
 ## 元素属性
+### 
 
 ### flex-grow
 
