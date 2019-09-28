@@ -38,13 +38,13 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 元素一行排不下时，是否换行
 * nowrap 不换行
 * wrap 换行
-* 
+* wrap-reverse
 
 <script async src="//jsfiddle.net/littlebaozi/wk21hpq5/embed/html,css,result/"></script>
 
 ### flex-flow
 `flex-direction`和`flex-wrap`的缩写
-*  <flex-direction> || <flex-wrap>;
+*  <flex-direction> || <flex-wrap> row nowrap
 
 ### justify-content
 主轴方向元素对齐方式
