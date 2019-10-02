@@ -16,8 +16,11 @@ hexo publish article-name # 发布草稿
 * 开发实践 `prictice-`
 
 ## categories
-* 读书人的事
+* 阅读
 * 开发
+* 日常
+* 翻译
+* 折腾
 
 ## tags
 * 读书

@@ -2,7 +2,7 @@
 title: 《坏血：一个硅谷巨头的秘密与谎言》
 date: 2019-08-25 09:08:46
 tags: 读书
-categories: 读书人的事
+categories: 阅读
 ---
 
 ## 简介

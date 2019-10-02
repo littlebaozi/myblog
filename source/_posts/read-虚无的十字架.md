@@ -3,7 +3,7 @@ title: 《虚无的十字架》
 date: 2019-04-14 10:41:41
 thumbnail: https://easyreadfs.nosdn.127.net/PyCnpcjbU19OXb-4VQZrBw==/8796093024698775200
 tags: 读书
-categories: 读书人的事
+categories: 阅读
 ---
 
 ## 简介

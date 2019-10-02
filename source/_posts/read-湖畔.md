@@ -3,7 +3,7 @@ title: 《湖畔》
 date: 2019-05-02 15:43:59
 thumbnail: https://img30.360buyimg.com/n7/jfs/t1/31629/9/2349/83913/5c69455dE0ecc294b/9e52bf2d086f2a3a.jpg
 tags: 读书
-categories: 读书人的事
+categories: 阅读
 ---
 
 ## 简介
