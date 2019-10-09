@@ -15,6 +15,7 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 
 元素是根据轴线排列对齐的。
 
+
 ### 起止线
 起止线表示轴线的起点和终点，包含main start、main end和corss start、 corss end
 
@@ -56,15 +57,15 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 
 ### align-items
 交叉轴方向元素对齐方式
-* 
+* stretch 子元素没有设置高度或者auto，交叉轴上填充父元素
 * flex-start
 * flex-end
 * center
-* 
+* baseline 子元素内第一行元素对齐
 
 ## align-content
 多行元素时，交叉轴上到对齐方式
-* 
+* stretch
 * flex-start
 * flex-end
 * center
@@ -73,7 +74,7 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 
 
 ## 元素属性
-### 
+### order
 
 ### flex-grow
 
