@@ -1,7 +1,6 @@
 ---
 title: Vultr Ubuntu 18.04安装配置
 date: 2018-05-15 11:42:07
-thumbnail: https://www.vultr.com/dist/img/section/bird.svg
 tags: 科学上网
 categories: 折腾
 ---
