@@ -14,6 +14,7 @@ hexo publish article-name # 发布草稿
 * css总结 `css-`
 * 课程 `course-`
 * 开发实践 `prictice-`
+* 总结 `summary`
 
 ## categories
 * 阅读
