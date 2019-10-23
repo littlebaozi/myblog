@@ -5,6 +5,8 @@ tags: mac
 category: 日常
 ---
 
+# 好用的免费软件
+
 ## eZip
  [下载地址](https://ezip.awehunt.com/)
 
@@ -46,4 +48,32 @@ quicktime支持等视频格式也有限。IINA独立开发者开发等免费视�
 远程连接软件，远程windows不错哦。国区app store无法下载，可以安装beta版本。
 
 
+# 升级之后
+## 升级catalina之后，terminal提示切换zsh
+```bash
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+```
+1. 切换zsh之后，需要把bash的设置复制过来
 
+bash：$HOME/.bash_profile 或者 ~/.bash_profile
+
+zsh：$HOME/.zshrc 或者 ~/.zshrc
+
+强制自动生效：
+```bash
+source ~/.zshrc
+```
+2. 继续使用bash，不显示提示
+```bash
+vim ~/.bash_profile  #编辑该文件，在底部增加以下这行
+```
+
+`export BASH_SILENCE_DEPRECATION_WARNING=1`
+
+`:wq`保存推出
+
+```bash
+source ~/.bash_profile
+```
