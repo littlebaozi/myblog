@@ -12,7 +12,7 @@ date: 2019-09-25 08:50:05
 
 <!-- more -->
 
-<script async src="//jsfiddle.net/littlebaozi/rv9pw4qL/32/embed/html,css,result/"></script>
+<script async src="//jsfiddle.net/littlebaozi/rv9pw4qL/embed/html,css,result/"></script>
 
 ## 选择器规则
 优先级递减

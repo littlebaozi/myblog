@@ -1,14 +1,18 @@
 ---
 title: flex布局
-category: 开发
 tags:
   - css
   - 布局
+category: 开发
+date: 2019-10-29 22:35:32
 ---
+
 
 ## 基本概念
 
 {% asset_img flex.png flex布局 %}
+
+<!-- more -->
 
 ### 轴线
 flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross axis）。默认情况下（`flex-direction: row`），横向是主轴，纵向是交叉轴；当`flex-direction: column`时则是纵向是主轴，横向是交叉轴。
@@ -55,6 +59,8 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 * space-between 两边对齐，中间间距相等
 * space-around
 
+<script async src="//jsfiddle.net/littlebaozi/z210nsLg/embed/html,css,result/"></script>
+
 ### align-items
 交叉轴方向元素对齐方式
 * stretch 子元素没有设置高度或者auto，交叉轴上填充父元素
@@ -75,14 +81,17 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 
 ## 元素属性
 ### order
+设置元素的顺序
 
 ### flex-grow
 
 ### flex-shrink
 
 ### flex-basis
+
+### flex
 `flex-grow`、`flex-shrink`、`flex-basis`的缩写
 * <flex-grow> || <flex-shrink> || <flex-basis>
-### flex
 
 ### align-self
+设置自身在交叉轴上的对齐方式
