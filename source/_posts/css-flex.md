@@ -53,11 +53,13 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 
 ### justify-content
 主轴方向元素对齐方式
-* flex-start
-* flex-end
-* center
-* space-between 两边对齐，中间间距相等
-* space-around
+* flex-start 主轴起点对齐
+* flex-end 主轴终点对齐
+* center 居中
+* space-between 两端对齐，中间间距相等
+* space-around 每个元素周围分配相同的空间，两边的元素间距是中间元素间距的一半
+* space-evenly 每个元素之间的间隔相等，间距都相同
+* ...
 
 <script async src="//jsfiddle.net/littlebaozi/z210nsLg/embed/html,css,result/"></script>
 
@@ -81,17 +83,46 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 
 ## 元素属性
 ### order
-设置元素的顺序
+设置元素的顺序，值越小越靠前
+* <number>
 
 ### flex-grow
+有剩余空间时，放大比例。正整数。默认有剩余空间不放大
+* 0
+* <number>
 
 ### flex-shrink
+空间不够时，缩小比例。正整数。当空间不够时，默认缩小；0表示不缩小
+* 1
+* <number>
 
 ### flex-basis
+表示原始大小，默认元素原来大小
+* auto
+* <length>
 
 ### flex
 `flex-grow`、`flex-shrink`、`flex-basis`的缩写
+* 0 1 auto
 * <flex-grow> || <flex-shrink> || <flex-basis>
+* auto (1 1 auto) 
+* none (0 0 auto)
+* <number>(number number 0)
 
 ### align-self
-设置自身在交叉轴上的对齐方式
+设置自身在交叉轴上的对齐方式，比`align-items`少了`baseline`。
+* auto 继承容器
+* stretch
+* flex-start
+* flex-end
+* center
+
+## 应用实例
+### 左侧固定，右侧自适应
+<script async src="//jsfiddle.net/littlebaozi/qoty3gs2/embed/html,css,result/"></script>
+
+### 水平垂直居中
+<script async src="//jsfiddle.net/littlebaozi/whadrc6t/embed/html,css,result/"></script>
+
+### 宫格
+<script async src="//jsfiddle.net/littlebaozi/rm8uovb7/embed/html,css,result/"></script>
