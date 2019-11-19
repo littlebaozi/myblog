@@ -123,6 +123,3 @@ flex布局是基于轴线的，分为主轴（main axis）、交叉轴（cross a
 
 ### 水平垂直居中
 <script async src="//jsfiddle.net/littlebaozi/whadrc6t/embed/html,css,result/"></script>
-
-### 宫格
-<script async src="//jsfiddle.net/littlebaozi/rm8uovb7/embed/html,css,result/"></script>
