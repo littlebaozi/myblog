@@ -1,7 +1,7 @@
 ---
 title: 微信小程序开发记录
 date: 2017-01-16 11:30:48
-thumbnail: https://mp.weixin.qq.com/debug/wxadoc/introduction/image/n.png?t=201718
+thumbnail: https://res.wx.qq.com/wxdoc/dist/assets/img/demo.ef5c5bef.jpg
 tags:
 - 小程序
 categories: 开发
@@ -19,60 +19,85 @@ categories: 开发
 ## 事件绑定
 　　绑定的事件无法传参，用`data-`属性，然后用`e.currentTarget.dataset`获取
 
-## API
-### 页面跳转
-　　在wxml中设置`data-url`属性、`bindtap`事件
-```xml
-<block wx:for="{{menuList}}" wx:key="{{index}}">
-    <view class="menu-item" data-url="{{item.url}}" bindtap="navigatePage">
-        <!-- ... -->
-    </view> 
-</block>
-```
-　　获取data属性，使用`dataset`。
-　　*注意*：如果`view`内部还有元素，`e.target.dataset`是无法获取`data`属性的，需要使用`currentTarget`。
-```
-Page({
-    navigatePage: function(e){
-        var url = e.currentTarget.dataset.url; //dataset获取data属性
-        wx.navigateTo({url: url})
-   }
-})
-```
+## 页面跳转
+* 在wxml中设置`data-url`属性、`bindtap`事件
+  ```xml
+  <block wx:for="{{menuList}}" wx:key="{{index}}">
+      <view class="menu-item" data-url="{{item.url}}" bindtap="navigatePage">
+          <!-- ... -->
+      </view> 
+  </block>
+  ```
+  　　获取data属性，使用`dataset`。
+  　　*注意*：如果`view`内部还有元素，`e.target.dataset`是无法获取`data`属性的，需要使用`currentTarget`。
+  ```
+  Page({
+      navigatePage: function(e){
+          var url = e.currentTarget.dataset.url; //dataset获取data属性
+          wx.navigateTo({url: url})
+    }
+  })
+  ```
 
-### js动画
+* 比如从登陆页跳转到首页（tabBar有配置首页），必须使用`wx.switchTab(OBJECT)`跳转。
+* 已经打开的tab，调用`switchTab`不会触发`onShow`，只能手动调用`onShow`。
+* `wx.reLaunch`在1.1.0基础库中，安卓能够返回上一级页面，会报错`navigateBack with an unexist webviewId`
+  ```javascript
+  wx.switchTab({  
+      url: '../index/index',  
+      success: function (e) {  
+      var page = getCurrentPages().pop();  
+      if (page == undefined || page == null) return;  
+      page.onShow();  
+  }  
+  ```
+* app.js 使用`wx.switchTab(OBJECT)`跳转，报错`Cannot read property 'webviewId' of undefined`。
+
+* 页面无法跳转的问题
+
+  假设有A、B两个页面，A navigate B，B redirect A。当页面栈是5个的时候，A就无法导航到B了。要解决这个问题，B navigateBack A。
+{% asset_img routestack_5.png route %}
+  > 代码片段：https://developers.weixin.qq.com/s/oNu0X2mg7Ud7
+  A navigate B，B navigate A 也是同样的问题。
+
+  A navigate B，B navigate C，C redirect D，D redirect B，在非代码片段的项目中，会在10个页面栈之后，无法跳转。
+  {% asset_img routestack_10.png route %}
+  > 代码片段：https://developers.weixin.qq.com/s/kTue22mh7rdW
+
+
+## js动画
 1. 动画数据
 　　用animationData存储动画数据
-```javasript
-Page({
-  data: {
-    animationData: {}
-  }
-})
-```
+  ```javasript
+  Page({
+    data: {
+      animationData: {}
+    }
+  })
+  ```
 
-```xml
-<view animation="{{animationData}}"></view>
-```
+  ```xml
+  <view animation="{{animationData}}"></view>
+  ```
 
 2. 创建动画实例
-```javascript
-var animation = wx.createAnimation({
-    duration: durationTime,
-})
-```
-　　一个step表示一组动画，scale和rotate两个动作会同时进行
-```
-animation.scale(2,2).rotate(45).step()
-```
-　　然后通过`export`导出animation实例的动画数据，`setData`将动画数据传递给组件
-```
-this.setData({
-  animationData:animation.export()
-})
-```
+  ```javascript
+  var animation = wx.createAnimation({
+      duration: durationTime,
+  })
+  ```
+  　　一个step表示一组动画，scale和rotate两个动作会同时进行
+  ```
+  animation.scale(2,2).rotate(45).step()
+  ```
+  　　然后通过`export`导出animation实例的动画数据，`setData`将动画数据传递给组件
+  ```
+  this.setData({
+    animationData:animation.export()
+  })
+  ```
 
-### 下拉刷新、底部加载
+## 下拉刷新、底部加载
 
 　　下拉刷新只能使用页面的滚动，`scroll-view`不能用。
 
@@ -100,7 +125,7 @@ Page({
 })
 ```
 
-### 请求
+## 请求
 　　`wx.request`的success返回值不是服务器的直接返回数据，实际是在res.data中。所以如果statsuCode在服务器返回的数据中，需要自己做判断。下面通过[es6-promise](https://github.com/stefanpenner/es6-promise)封装了一下请求
 ```javascript
 //配合promise
@@ -127,23 +152,7 @@ new Promise((resolve, reject) => {
 })
 ```
 
-### 跳转
-* 比如从登陆页跳转到首页（tabBar有配置首页），必须使用`wx.switchTab(OBJECT)`跳转。
-* 已经打开的tab，调用`switchTab`不会触发`onShow`，只能手动调用`onShow`。
-* `wx.reLaunch`在1.1.0基础库中，安卓能够返回上一级页面，会报错`navigateBack with an unexist webviewId`
-```javascript
-wx.switchTab({  
-    url: '../index/index',  
-    success: function (e) {  
-    var page = getCurrentPages().pop();  
-    if (page == undefined || page == null) return;  
-    page.onShow();  
-}  
-```
-* app.js 使用`wx.switchTab(OBJECT)`跳转，报错`Cannot read property 'webviewId' of undefined`。
-
-## 组件
-### picker
+## picker
 　　index表示数据的下标，用来处理选中，需要在data中保存记录。当数据是object value时，需要设置`range-key`，否则弹出框显示[object objec]。
 
 ```html
@@ -193,15 +202,15 @@ Page({
 })
 ```
 
-### input
+## input
 　　input的type类型不同弹出键盘的类型不同
 * text：全键盘
 * mumber：纯数字键盘
 * digit：待小数点的数字键盘
 * 重置高度使用em单位
 
-### scroll-view
-#### 上下布局，下面scroll-view高度自动撑满：
+## scroll-view
+### 1. 上下布局，下面scroll-view高度自动撑满：
 * 一种方式是计算高度，设置scroll-view高度。但是设置了tabbar的话，没有显示tabbar的页面，windowHeight是减去tabbar的高度。可以新增的screenHeight。然而如果用rpx布局，计算误差还是存在的。
 * 另一种方式是css来布局。
 
@@ -222,11 +231,11 @@ Page({
 }
 ```
 
-#### 横向scroll
+### 2. 横向scroll
 * `scroll-view`一定要设置宽度和`white-space: nowrap`
 * 子元素一定要设置宽度和`display:inline-block`
 
-## API
+## 兼容性
 　　screenHeight, SDKVersion 基础库版本 1.1.0 开始支持, 微信客户端 6.5.6 版本开始支持。
 所以在需要设置scrollview高度与屏幕高度相关时，旧版本只能windowHeight，但在设置tabbar时，会减去tabbar的高度。
 tabbar高度是`56px`，需要手动加上。
