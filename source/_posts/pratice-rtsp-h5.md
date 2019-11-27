@@ -19,6 +19,8 @@ date: 2019-10-23 15:39:16
 * [几种浏览器播放RTSP视频流的方案](https://bnlt.org/2019/%E5%87%A0%E7%A7%8D%E6%B5%8F%E8%A7%88%E5%99%A8%E6%92%AD%E6%94%BERTSP%E8%A7%86%E9%A2%91%E6%B5%81%E7%9A%84%E6%96%B9%E6%A1%88/)
 * [网络摄像机直播](https://caraws.github.io/2018/05/06/%E7%BD%91%E7%BB%9C%E6%91%84%E5%83%8F%E6%9C%BA%E7%9B%B4%E6%92%AD/)
 
+<!-- more -->
+
 ## 小科普
 rtsp、rtmp、hls都是流媒体传输协议。
 
