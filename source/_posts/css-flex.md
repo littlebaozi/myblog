@@ -1,7 +1,7 @@
 ---
 title: flex布局
 tags:
-  - css
+  - CSS
   - 布局
 category: 开发
 date: 2019-10-29 22:35:32

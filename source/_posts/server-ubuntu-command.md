@@ -1,6 +1,6 @@
 ---
-title: linux命令
-tags: linux
+title: Ubuntu命令
+tags: Linux
 category: 开发
 date: 2019-09-27 20:11:30
 ---

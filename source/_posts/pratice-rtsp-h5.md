@@ -2,7 +2,8 @@
 title: 网页直播rtsp视频 node.js+ffmpeg+websocket+flv.js
 tags:
   - 直播
-  - node.js
+  - Node.js
+  - H5
 category: 开发
 date: 2019-10-23 15:39:16
 ---

@@ -140,7 +140,7 @@ widgets:
         # Widget name
         type: toc
         # Where should the widget be placed, left or right
-        position: right
+        position: left
     # -
         # Widget name
         # type: links
@@ -150,11 +150,11 @@ widgets:
         # links:
             # Hexo: 'https://hexo.io'
             # PPOffice: 'https://github.com/ppoffice'
-    -
+    # -
         # Widget name
-        type: category
+        # type: category
         # Where should the widget be placed, left or right
-        position: left
+        # position: left
     -
         # Widget name
         type: tagcloud
@@ -165,11 +165,11 @@ widgets:
         # type: recent_posts
         # Where should the widget be placed, left or right
         # position: right
-    -
+    # -
         # Widget name
-        type: archive
+        # type: archive
         # Where should the widget be placed, left or right
-        position: right
+        # position: right
     # -
         # Widget name
         # type: tag

@@ -1,7 +1,9 @@
 ---
 title: Vultr Ubuntu 18.04安装配置
 date: 2018-05-15 11:42:07
-tags: 科学上网
+tags:
+  - 科学上网
+  - Linux
 categories: 折腾
 ---
 

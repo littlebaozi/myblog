@@ -3,7 +3,7 @@ title: LeetCode JavaScript
 date: 2019-08-08 08:57:23
 tags:
 - 算法
-- javascript
+- JavaScript
 category: 开发
 ---
 

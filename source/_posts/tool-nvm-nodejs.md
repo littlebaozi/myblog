@@ -2,8 +2,8 @@
 title: nvm的安装
 date: 2018-11-19 13:46:55
 tags:
- - node.js
- - npm
+ - Node.js
+ - Npm
 categories: 开发
 ---
 

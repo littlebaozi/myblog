@@ -1,6 +1,6 @@
 ---
 title: CSS优先级
-tags: css
+tags: CSS
 category: 开发
 date: 2019-09-25 08:50:05
 ---

@@ -1,7 +1,7 @@
 ---
 title: git 操作实践
 tags:
-  - git
+  - Git
 categories: 开发
 thumbnail: 'https://git-scm.com/images/logo@2x.png'
 date: 2019-07-26 15:36:39
