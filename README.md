@@ -27,7 +27,7 @@ hexo publish article-name # 发布草稿
 
 ## tags
 * JavaScript
-* Css
+* CSS
 * 读书
 * H5
 * 微信

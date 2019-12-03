@@ -8,6 +8,16 @@ date: 2019-12-02 15:16:21
 
 this指向是在运行时决定的。
 
+<!-- more -->
+
+## 绑定规则
+1. 分类
+
+2. 优先级
+
+3. 判断规则
+
+
 ## 运行环境
 浏览器环境下，最外层`this`指向`window`。如果是`strict`模式，指向`undefined`。Node环境中，最外层`this`也指向`undefined`。
 ```javascript
@@ -151,4 +161,15 @@ var obj = {
   }
 }
 obj.funcTimer() // 1
+```
+
+## 常见题
+```javascript
+var obj = {
+    showFunction:function(){
+    }
+}
+obj.showFunction()  //this指向谁
+var newObj = obj.showFunction;
+newObj()           //this指向谁
 ```
