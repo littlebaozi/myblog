@@ -5,32 +5,16 @@ tags: JavaScript
 categories: A常用
 ---
 
-## 对象
-* bind
-普通函数中this在非严格模式下指向window，在严格模式下是undefined
+## 函数
+* 参数转数组
 ```javascript
-'use strict'
-function func(){
-    console.log(this)
+function args() {
+    [...arguments]
+    // 下面两种方式可以转换类数组
+    [].slice.call(arguments) // Array.prototype.slice.call(arguments)
+    Array.from(arguments)
 }
 ```
-
-通过call，bind可以改变this的指向
-```javascript
-var str = 'abc';
-
-var Obj = {
-    str: 'cde',
-    getStr: function(){
-        console.log(this.str)
-    }
-}
-Obj.getStr();
-Obj.getStr.call();
-Obj.getStr.bind(this)();
-```
-
-<!-- more -->
 
 ## 数组
 * for...of 与 for...in
@@ -54,9 +38,6 @@ for (a of arr) {
 Array.prototype.concat.apply(["a","b"], ["c","d"])
 Array.prototype.concat.apply([], [["a","b"],["c", "d"]])
 ```
-
-* 转换数组对象
-`[].slice.call(arguments)`，可以在函数内将参数转换成数组
 
 * 求最大值/小值
 ```javascript

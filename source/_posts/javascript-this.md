@@ -213,7 +213,8 @@ var obj = {
 obj.funcTimer(); // 2
 ```
 
-### 试题
+## 试题
+* 下面this指向
 ```javascript
 var obj = {
     showFunction:function(){
@@ -223,3 +224,5 @@ obj.showFunction()  //this指向谁
 var newObj = obj.showFunction;
 newObj()           //this指向谁
 ```
+
+* 实现bind
