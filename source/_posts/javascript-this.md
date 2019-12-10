@@ -4,20 +4,27 @@ tags: JavaScript
 category: 开发
 ---
 
-this指向是在运行时决定的。
+
 
 TODO: 
 [] 优先级
 [] this判断流程图
 
-
 ## 运行环境
-浏览器环境下，最外层`this`指向`window`。如果是`strict`模式，指向`undefined`。Node环境中，最外层`this`也指向`undefined`。
+this指向是在运行时决定的。浏览器环境下，最外层`this`指向`window`。如果是`strict`模式，指向`undefined`。Node环境中，最外层`this`也指向`undefined`。
 ```javascript
 console.log(this); // window
 ```
 
 <!-- more -->
+
+this的绑定方式可以分为显式绑定、隐式绑定、new绑定。
+
+## 隐式绑定
+
+## 显式绑定
+
+## new绑定
 
 ## 函数
 1. 普通函数
@@ -90,7 +97,7 @@ var getA = obj.getA;
 getA(); // 1
 ```
 
-* 箭头函数的话，指向的是`window`
+* 箭头函数中没有this，this是继承自上一层运行环境的this
 ```javascript
 var a = 1;
 var obj = {
@@ -100,6 +107,24 @@ var obj = {
   }
 }
 obj.getA(); // 1
+var ga = obj.getA;
+ga(); // 1
+```
+
+```javascript
+var a = 1;
+var obj = {
+  a: 2,
+  getA: function () {
+   var fn = () => {
+    console.log(this.a);
+    }
+   fn()
+  }
+}
+obj.getA(); // 2
+var ga = obj.getA
+ga() // 1
 ```
 
 ## 改变this指向
@@ -225,4 +250,4 @@ var newObj = obj.showFunction;
 newObj()           //this指向谁
 ```
 
-* 实现bind
+* 实现bind、call、apply

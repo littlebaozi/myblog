@@ -6,7 +6,7 @@ category: 开发
 ---
 
 ## 什么是闭包
-闭包指的是能够访问另一个函数作用域中变量的函数；一个函数对另一个函数作用域的引用。
+闭包指的是：能够访问另一个函数作用域中变量的函数；一个函数对另一个函数作用域的引用。
 
 > 函数与对其状态即词法环境（lexical environment）的引用共同构成闭包（closure）。
 > -- [MDN闭包](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures)
