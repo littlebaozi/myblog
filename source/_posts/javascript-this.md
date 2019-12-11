@@ -4,86 +4,27 @@ tags: JavaScript
 category: 开发
 ---
 
+## this的绑定方式
+this指向是在运行时决定的。this的绑定方式可以分为默认绑定、隐式绑定、显式绑定、new绑定。
 
+绑定的优先级：new > 显式 > 隐式 > 默认。
 
-TODO: 
-[] 优先级
-[] this判断流程图
-
-## 运行环境
-this指向是在运行时决定的。浏览器环境下，最外层`this`指向`window`。如果是`strict`模式，指向`undefined`。Node环境中，最外层`this`也指向`undefined`。
-```javascript
-console.log(this); // window
-```
+{% asset_img this.jpg this判断流程 %}
 
 <!-- more -->
 
-this的绑定方式可以分为显式绑定、隐式绑定、new绑定。
-
-## 隐式绑定
-
-## 显式绑定
-
-## new绑定
-
-
-## 函数
-1. 普通函数
+## 默认绑定
+严格模式下，是`undefined`；否则是全局对象。
 ```javascript
 // 普通函数
 function test() {
-  console.log(this); // 1, window
+  console.log(this);
 }
 test()
 ```
 
-2. 箭头函数
-箭头函数中的this绑定的是上一级的this。
-```javascript
-const test = () => {
-  console.log(this); // 1, window
-}
-test()
-```
-
-3. 构造函数
-构造函数中的this在实例化后就绑定且不可更改了
-```javascript
-var a = 1;
-function test() {
-  this.a = 2
-  this.getA = function () {
-    console.log(this.a);
-  }
-  console.log(this.a); // 2, test
-}
-
-var t = new test();
-a = 3;
-t.getA(); // getA是可以通过bind、call、apply更改this指向
-```
-
-## 定时器
-定时器中函数的this指向一般是`window`。
-```javascript
-var a = 2;
-var obj = {
-  a: 1,
-  func: function () {
-    console.log(this.a);
-  },
-  funcTimer: function () {
-    setTimeout(function () {
-      console.log(this.a);
-    }, 0);
-  }
-}
-obj.func(); // 1
-obj.funcTimer(); // 2
-```
-
-## 对象中的this
-* 对象中，普通函数指向对象。
+## 隐式绑定
+对象中，普通函数指向对象。
 ```javascript
 var a = 1;
 var obj = {
@@ -98,38 +39,8 @@ var getA = obj.getA;
 getA(); // 1
 ```
 
-* 箭头函数中没有this，this是继承自上一层运行环境的this
-```javascript
-var a = 1;
-var obj = {
-  a: 2,
-  getA: () => {
-    console.log(this.a);
-  }
-}
-obj.getA(); // 1
-var ga = obj.getA;
-ga(); // 1
-```
-
-```javascript
-var a = 1;
-var obj = {
-  a: 2,
-  getA: function () {
-   var fn = () => {
-    console.log(this.a);
-    }
-   fn()
-  }
-}
-obj.getA(); // 2
-var ga = obj.getA
-ga() // 1
-```
-
-## 改变this指向
-* 使用bind、apply、call可以改变this的指向。
+## 显式绑定
+使用bind、apply、call可以改变this的指向。
 ```javascript
 var a = 1;
 var obj = {
@@ -177,6 +88,74 @@ var res = [1, 2, 3].map(function(item) {
   return this.a;
 }, obj);
 console.log(res); // ['a','a','a']
+```
+
+## new绑定
+* 构造函数
+构造函数中的this在实例化后就绑定且不可更改了
+```javascript
+var a = 1;
+function test() {
+  this.a = 2
+  this.getA = function () {
+    console.log(this.a);
+  }
+  console.log(this.a); // 2, test
+}
+var t = new test();
+a = 3;
+t.getA(); // getA是可以通过bind、call、apply更改this指向
+```
+
+## 例外
+* 箭头函数
+箭头函数中没有this，this是继承自上一层运行环境的this
+```javascript
+var a = 1;
+var obj = {
+  a: 2,
+  getA: () => {
+    console.log(this.a);
+  }
+}
+obj.getA(); // 1
+var ga = obj.getA;
+ga(); // 1
+```
+
+```javascript
+var a = 1;
+var obj = {
+  a: 2,
+  getA: function () {
+   var fn = () => {
+    console.log(this.a);
+    }
+   fn()
+  }
+}
+obj.getA(); // 2
+var ga = obj.getA
+ga() // 1
+```
+
+* 定时器
+定时器中函数的this指向一般是`window`。
+```javascript
+var a = 2;
+var obj = {
+  a: 1,
+  func: function () {
+    console.log(this.a);
+  },
+  funcTimer: function () {
+    setTimeout(function () {
+      console.log(this.a);
+    }, 0);
+  }
+}
+obj.func(); // 1
+obj.funcTimer(); // 2
 ```
 
 ## 问题解决

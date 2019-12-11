@@ -32,3 +32,6 @@ hexo publish article-name # 发布草稿
 * H5
 * 微信
 * 小程序
+
+## 写作
+* 插入图片`{% asset_img name.jpg title %}`
