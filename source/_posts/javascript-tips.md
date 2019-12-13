@@ -84,3 +84,13 @@ setTimeout(function () {
 console.log(arr)
 console.log(arr.length)
 ```
+
+## 算法
+* 按顺序取数组
+```javascript
+for (var i = 0; i < 10; i++) {
+    var arr = ['a','b','c','d'];
+    var item = arr[i % arr.length];
+    console.log(item);
+}
+```
