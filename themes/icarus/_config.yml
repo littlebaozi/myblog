@@ -151,9 +151,9 @@ widgets:
             # Hexo: 'https://hexo.io'
             # PPOffice: 'https://github.com/ppoffice'
     -
-        Widget name
+        # Widget name
         type: category
-        Where should the widget be placed, left or right
+        # Where should the widget be placed, left or right
         position: left
     -
         # Widget name
