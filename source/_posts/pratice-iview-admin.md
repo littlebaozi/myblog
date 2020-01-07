@@ -20,6 +20,17 @@ categories:
 ## 增加开发、编译环境
 修改参照[vue cli文档](https://cli.vuejs.org/zh/guide/mode-and-env.html#%E6%A8%A1%E5%BC%8F)
 
+修改`package.json`，增加mock和stage
+```json
+{
+  "scripts": {
+    "mock": "vue-cli-service serve --open --mode mock",
+    "stage": "vue-cli-service build --mode staging",
+  }
+}
+```
+
+
 * .env(默认环境)
 ```
 # 所有环境默认
