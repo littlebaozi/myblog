@@ -5,6 +5,7 @@ tags:
   - 小程序
   - 蓝牙
 category: 开发
+toc: true
 ---
 
 ## 项目结构

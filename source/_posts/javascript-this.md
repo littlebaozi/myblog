@@ -2,6 +2,7 @@
 title: JavaScript基础之this
 tags: JavaScript
 category: 开发
+toc: true
 ---
 
 ## this的绑定方式

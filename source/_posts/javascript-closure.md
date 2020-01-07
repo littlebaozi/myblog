@@ -3,6 +3,7 @@ title: JavaScript基础之闭包
 date: 2019-12-03 09:25:08
 tags: JavaScript
 category: 开发
+toc: true
 ---
 
 ## 什么是闭包
