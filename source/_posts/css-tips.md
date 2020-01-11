@@ -14,10 +14,10 @@ categories: A常用
 * 多行省略号
 ```css
 element{
- display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 3; //修改该数字
-overflow: hidden;   
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; //修改该数字
+    overflow: hidden;   
 }
 ```
 * 单行省略号

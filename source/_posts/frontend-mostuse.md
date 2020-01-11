@@ -99,7 +99,7 @@ toc: true
 
 
 ## 生产力工具
-* 快速开发： [WeFlow](https://weflow.io/)、 [ELF](https://elf.aotu.io/)、 [QMUI](https://qmuiteam.com/)
+* 快速开发： [X-BUILD](npm install -g x-build)、[ELF](https://elf.aotu.io/)、 [QMUI](https://qmuiteam.com/)
 * 部署：[瓦力上线部署](http://www.walle-web.io/)
 * 其他：[字蛛](http://font-spider.org/)
 * npm工具：nrm（npm源切换）、npm-check（npm包更新检查）、serve（快速启动服务器）、windows-build-tools（windows安装npm包各种问题可以装这个解决）
