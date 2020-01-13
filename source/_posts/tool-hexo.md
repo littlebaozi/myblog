@@ -88,6 +88,14 @@ de strict mode
 ```
 在`blog\node_modules\hexo-generator-json-content`第一行加入`"use strict";`
 
+* 使用table，文章中在table之前出现很多`<br>`。
+```markdown
+{% raw %}
+  <table>
+  </table>
+{% endraw %}
+```
+
 ## 写作
 * 写草稿：`hexo new draft <title>`；发布草稿：`hexo publish <title>`
 * 文章tags、categories
