@@ -38,7 +38,7 @@ toc: true
 * jQuery： (H-ui.admin)[http://www.h-ui.net/H-ui.admin.shtml]
 
 ## Node后台
-* [ThinkJS](https://thinkjs.org/)、 [egg](https://eggjs.org/)
+* [egg](https://eggjs.org/)
 
 ## Vue组件
 * 拖动：[vue-grid-layout](https://github.com/jbaysolutions/vue-grid-layout)
