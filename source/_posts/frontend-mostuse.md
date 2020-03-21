@@ -38,7 +38,7 @@ toc: true
 * jQuery： (H-ui.admin)[http://www.h-ui.net/H-ui.admin.shtml]
 
 ## Node后台
-* [ThinkJS](https://thinkjs.org/)、 [egg](https://eggjs.org/)
+* [egg](https://eggjs.org/)
 
 ## Vue组件
 * 拖动：[vue-grid-layout](https://github.com/jbaysolutions/vue-grid-layout)
@@ -102,7 +102,7 @@ toc: true
 * 快速开发： [X-BUILD](npm install -g x-build)、[ELF](https://elf.aotu.io/)、 [QMUI](https://qmuiteam.com/)
 * 部署：[瓦力上线部署](http://www.walle-web.io/)
 * 其他：[字蛛](http://font-spider.org/)
-* npm工具：nrm（npm源切换）、npm-check（npm包更新检查）、serve（快速启动服务器）、windows-build-tools（windows安装npm包各种问题可以装这个解决）
+* npm工具：nrm（npm源切换）、npm-check（npm包更新检查）、serve（快速启动服务器）、windows-build-tools（windows安装npm包各种问题可以装这个解决）、ctree-cli（显示树形目录）
 * API：[easy mock](https://www.easy-mock.com)
 * sketch插件
   * [SketchI18N](https://github.com/cute/SketchI18N)
