@@ -7,6 +7,8 @@ categories: 影视
 ## 动漫
 * 宝石之国
 * 动物狂想曲 / BEASTARS
+* 白箱 / SHIROBAKO
+* 东京教父
 
 ## 电视剧
 * 知否知否应是绿肥红瘦
