@@ -6,14 +6,82 @@ category: 学习
 ---
 
 # 页面布局
-## 高度已知，三栏布局，左右栏宽度都为300px，中间自适应
+## 问题：高度已知，三栏布局，左右栏宽度都为300px，中间自适应
 ### 布局方式
+```css
+/* 通用样式 */
+* {
+  padding: 0;
+  margin: 0;
+}
+.layout{
+  background-color: red;
+}
+.side {
+  width: 200px;
+  height: 50px;
+}
+.left {
+  background-color: #3498DB;
+}
+.center {
+  background-color: #58D68D;
+  height: 60px;
+  color: #fff;
+  text-align: center;
+}
+.right {
+  background-color: #F4D03F;
+}
+```
 * 浮动
-  * 优点
-  * 缺点
+```html
+<style>
+.layout-float {
+  .left{
+    float: left;
+  }
+  .right {
+    float: right;
+  }
+}
+</style>
+<section class="layout layout-float">
+  <div class="side left"></div>
+  <div class="side right"></div>
+  <div class="center">float布局</div>
+</section>
+```
+  * 优点：兼容性好
+  * 缺点：浮动会脱离文档流，需要做好清除浮动；`.center`高度比两边高时，内容会流动到两边；`.center`高度比两边低时，`.layout`高度是`.center`高度
 * 绝对定位
-  * 优点
-  * 缺点
+```html
+<style>
+.layout-absolute{
+  position: relative;
+  .left{
+    position: absolute;
+    left: 0;
+  }
+  .right{
+    position: absolute;
+    right: 0;
+  }
+  .center{
+    position: absolute;
+    left: 200px;
+    right: 200px;
+  }
+}
+</style>
+<section class="layout layout-absolute">
+  <div class="side left"></div>
+  <div class="center">absolute布局</div>
+  <div class="side right"></div>
+</section>
+```
+  * 优点：兼容性好，布局快捷
+  * 缺点：元素脱离文档流，`.layout`高度不能撑开
 * table
   * 优点
   * 缺点
