@@ -5,94 +5,34 @@ tags: 面试
 category: 学习
 ---
 
-# 页面布局
-## 问题：高度已知，三栏布局，左右栏宽度都为300px，中间自适应
+# 1 页面布局
+## 1.1 问题：高度已知，三栏布局，左右栏宽度都为300px，中间自适应
 ### 布局方式
-```css
-/* 通用样式 */
-* {
-  padding: 0;
-  margin: 0;
-}
-.layout{
-  background-color: red;
-}
-.side {
-  width: 200px;
-  height: 50px;
-}
-.left {
-  background-color: #3498DB;
-}
-.center {
-  background-color: #58D68D;
-  height: 60px;
-  color: #fff;
-  text-align: center;
-}
-.right {
-  background-color: #F4D03F;
-}
-```
-* 浮动
-```html
-<style>
-.layout-float {
-  .left{
-    float: left;
-  }
-  .right {
-    float: right;
-  }
-}
-</style>
-<section class="layout layout-float">
-  <div class="side left"></div>
-  <div class="side right"></div>
-  <div class="center">float布局</div>
-</section>
-```
+
+<script async src="//jsfiddle.net/littlebaozi/qnxagtsb/embed/html,css,result/"></script>
+
+* float
   * 优点：兼容性好
-  * 缺点：浮动会脱离文档流，需要做好清除浮动；`.center`高度比两边高时，内容会流动到两边；`.center`高度比两边低时，`.layout`高度是`.center`高度
+  * 缺点：浮动会脱离文档流，会影响`.layout`的兄弟元素，需要做好清除浮动；`.center`高度比两边高时，内容会流动到两边；`.layout`的高度同`.center`高度，`side高度`可能会超出`.layout`
+
 * 绝对定位
-```html
-<style>
-.layout-absolute{
-  position: relative;
-  .left{
-    position: absolute;
-    left: 0;
-  }
-  .right{
-    position: absolute;
-    right: 0;
-  }
-  .center{
-    position: absolute;
-    left: 200px;
-    right: 200px;
-  }
-}
-</style>
-<section class="layout layout-absolute">
-  <div class="side left"></div>
-  <div class="center">absolute布局</div>
-  <div class="side right"></div>
-</section>
-```
   * 优点：兼容性好，布局快捷
   * 缺点：元素脱离文档流，`.layout`高度不能撑开
+
 * table
-  * 优点
-  * 缺点
+  * 优点：兼容性很好
+  * 缺点：高度会同时变化，语义化问题
+
 * flex
-  * 优点
-  * 缺点
+  * 优点：CSS3的布局方式，目前比较完美的方案
+  * 缺点：兼容性
+
 * grid
-  * 优点
-  * 缺点
+  * 优点：可以做更复杂布局
+  * 缺点：兼容性还不够好
 
 ### 扩展问题
+* float布局为什么`.center`要放最后？清除浮动的几种方式
 * 高度不确定时，哪些不适用
 
 * 中间元素高度增加，左右元素能自适应增加高度吗？
