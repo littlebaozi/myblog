@@ -32,12 +32,19 @@ category: 学习
   * 缺点：兼容性还不够好
 
 ### 扩展问题
-* float布局为什么`.center`要放最后？清除浮动的几种方式
-* 高度不确定时，哪些不适用
+* float布局为什么`.center`要放最后？
+  左侧设置`float：left`，脱离文档流，右侧则会到第一行，中间到第二行；右侧设置`float: right`，脱离文档流，中间到第一行。
 
-* 中间元素高度增加，左右元素能自适应增加高度吗？
+* 清除浮动的几种方式？
+  * 空元素`clear:both`
+  * 伪元素`clear:both`
+  * BFC，`overflow`非`visible`
+
+* 高度不确定时，哪些适用？中间元素高度增加，左右元素能自适应增加高度吗？
+  左右不设置高度的情况下，**table布局、flex布局**可以。
 
 * 最优方案
+  易用性、兼容性来讲，**flex布局方案**最好。
 
 * 其他布局
   * 三栏布局
@@ -54,3 +61,26 @@ category: 学习
 * CSS 基础知识扎实
 * 思维灵活积极向上 知道每个方案的优缺点、对比
 * 代码书写规范
+
+# 2. CSS盒模型
+## 2.1 盒模型
+### 概念
+盒模型分为标准盒模型(content-box)和IE盒模型(border-box)。
+
+### 区别
+* 标准盒模型，元素宽/高是content区域的宽/高
+{% asset_img content-box.png content-box %}
+
+* IE盒模型，元素宽/高是content宽/高 + padding + border
+{% asset_img border-box.png border-box %}
+
+### 如何设置
+`box-sizing: content-box | border-box`
+
+### js获取盒子宽度
+* `dom.style.width/height` 只能获取行内样式
+* `window.getComputedStyle(dom).width/height` 只读，IE8以下不支持
+* `dom.getBoundingClientStyle()`IE8以下不支持
+* `dom.currentStyle`IE自有
+
+## 2.2 BFC
