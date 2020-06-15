@@ -78,9 +78,11 @@ category: 学习
 `box-sizing: content-box | border-box`
 
 ### js获取盒子宽度
-* `dom.style.width/height` 只能获取行内样式
+* `dom.style.width/height` 只能获取内联样式
 * `window.getComputedStyle(dom).width/height` 只读，IE8以下不支持
 * `dom.getBoundingClientStyle()`IE8以下不支持
+  * `content-box` 值：width + padding + border
+  * `border-box` 值：width
 * `dom.currentStyle`IE自有
 
 ## 2.2 BFC
