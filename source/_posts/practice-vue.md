@@ -149,3 +149,36 @@ module.exports = {
     }
 }
 ```
+
+## 父子孙组件数据传递（依赖注入）动态响应
+provide中的值必须是对象，inject中才能动态响应
+```javascript
+// 父组件
+{
+  provide () {
+    return {
+      userData: this.userData
+    }
+  },
+  data () {
+    return {
+      userData: {
+        userName: '',
+        userCode: ''
+      }
+    }
+  },
+  methods: {
+    updateUserData (record) {
+      const { name, code } = record
+      this.userData.userName = name
+      this.userData.userCode = code
+    }
+  }
+}
+
+// 子孙组件
+{
+  inject: ['userData']
+}
+```
